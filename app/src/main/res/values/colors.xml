@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#303030</color>
+    <color name="colorPrimaryDark">#202020</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="nima_title_text_color">#00C549</color>
+    <color name="nima_details_text_color">#000000</color>
+</resources>
