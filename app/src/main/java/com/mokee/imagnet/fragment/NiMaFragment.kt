@@ -108,7 +108,7 @@ class NiMaFragment : Fragment() {
     }
 
     override fun onDetach() {
-        EventBus.getDefault().register(this)
+        EventBus.getDefault().unregister(this)
         Timber.d("Nima fragment is detach.")
         super.onDetach()
     }
