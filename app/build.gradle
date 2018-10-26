@@ -41,4 +41,5 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.10.2'
 
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
+    implementation 'com.github.ybq:Android-SpinKit:1.0.4'
 }

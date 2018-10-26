@@ -8,10 +8,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.github.ybq.android.spinkit.SpinKitView
 import com.mokee.imagnet.R
 import com.mokee.imagnet.adapter.NimaHomeAdapter
 import com.mokee.imagnet.constrant.MagnetConstrant
 import com.mokee.imagnet.event.NimaHomeItemEvent
+import com.mokee.imagnet.event.RequestFailEvent
 import com.mokee.imagnet.event.RequestType
 import com.mokee.imagnet.model.NimaItem
 import com.mokee.imagnet.presenter.NetworkPresenter
@@ -27,6 +29,7 @@ class NiMaFragment : Fragment() {
 
     private lateinit var mHomeListView: RecyclerView
     private lateinit var mSmartRefreshLayout: SmartRefreshLayout
+    private lateinit var mSpinKitView: SpinKitView
 
     private var homeItemList: MutableList<NimaItem> = mutableListOf()
     private lateinit var mLayoutManager: LinearLayoutManager
@@ -42,6 +45,8 @@ class NiMaFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_nima, null)
         mHomeListView = view.findViewById(R.id.nima_home_list)
         mSmartRefreshLayout = view.findViewById(R.id.nima_refreshLayout)
+        mSpinKitView = view.findViewById(R.id.nima_loading)
+
         isPrepared = true
         Timber.d("Nima fragment is prepared.")
         onLazyLoad()
@@ -55,7 +60,7 @@ class NiMaFragment : Fragment() {
 
         initView()
         loadData()
-
+        mSpinKitView.visibility = View.VISIBLE
     }
 
     private fun loadData() {
@@ -84,6 +89,7 @@ class NiMaFragment : Fragment() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public fun onHomeItem(event: NimaHomeItemEvent) {
         mSmartRefreshLayout.finishRefresh(true)
+        mSpinKitView.visibility = View.GONE
 
         Timber.d("Received home item event: ${event.item}")
         homeItemList.forEach {
@@ -93,6 +99,12 @@ class NiMaFragment : Fragment() {
         }
         homeItemList.add(homeItemList.size, event.item)
         mAdapter.notifyItemInserted(homeItemList.size)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public fun onRequestFail(event: RequestFailEvent) {
+        mSmartRefreshLayout.finishRefresh(false)
+        mSpinKitView.visibility = View.GONE
     }
 
     override fun onDetach() {

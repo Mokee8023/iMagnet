@@ -22,6 +22,7 @@ import android.widget.TextView
 import android.widget.ViewSwitcher
 import com.mokee.imagnet.R
 import com.mokee.imagnet.event.NimaDetailItemEvent
+import com.mokee.imagnet.event.RequestFailEvent
 import com.mokee.imagnet.event.RequestType
 import com.mokee.imagnet.fragment.NiMaFragment
 import com.mokee.imagnet.model.NimaFuli
@@ -51,6 +52,7 @@ class NimaDetailsActivity : AppCompatActivity(){
         Timber.d("Received detail url is $detailUrl")
 
         loadData()
+        nima_detail_loading.visibility = View.VISIBLE
         initView()
     }
 
@@ -118,8 +120,15 @@ class NimaDetailsActivity : AppCompatActivity(){
     public fun onDetailItem(event: NimaDetailItemEvent) {
         Timber.d("Received nima detail item event $event")
         nima_detail_refreshLayout.finishRefresh(true)
+        nima_detail_loading.visibility = View.GONE
 
         processDetail(event)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public fun onRequestFail(event: RequestFailEvent) {
+        nima_detail_loading.visibility = View.GONE
+        nima_detail_refreshLayout.finishRefresh(false)
     }
 
     /**
