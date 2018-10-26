@@ -31,7 +31,7 @@ object NimaProcess : ProcessResponse() {
                 href = MagnetConstrant.NIMA_HOME_URL + href
 
                 // special process
-                href = href.replace("hot", "first")
+//                href = href.replace("hot", "first")
 
                 val name = it.text()
                 Timber.d("Nima home item, href: $href, name: $name")

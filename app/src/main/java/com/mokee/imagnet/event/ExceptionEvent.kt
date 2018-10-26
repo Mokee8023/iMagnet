@@ -4,4 +4,4 @@ import java.lang.Exception
 
 sealed class ExceptionEvent
 
-data class RequestFailEvent(val exception: Exception) : ExceptionEvent()
+data class RequestFailEvent(val requestUrl: String, val exception: Exception) : ExceptionEvent()

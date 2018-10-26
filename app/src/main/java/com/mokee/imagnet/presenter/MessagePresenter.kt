@@ -1,11 +1,14 @@
 package com.mokee.imagnet.presenter
 
+import android.content.Context
+import android.widget.Toast
 import com.mokee.imagnet.event.RequestFailEvent
 import com.mokee.imagnet.event.RequestType
 import com.mokee.imagnet.event.ResponseEvent
 import com.mokee.imagnet.presenter.process.ali.AliProcess
 import com.mokee.imagnet.presenter.process.btdb.BtdbProcess
 import com.mokee.imagnet.presenter.process.cilicat.CilicatProcess
+import com.mokee.imagnet.presenter.process.nima.NimaDetailProcess
 import com.mokee.imagnet.presenter.process.nima.NimaItemProcess
 import com.mokee.imagnet.presenter.process.nima.NimaProcess
 
@@ -20,6 +23,9 @@ class MessagePresenter {
             RequestType.NIMA_ITEM -> {
                 NimaItemProcess.processResponse(event.response)
             }
+            RequestType.NIMA_DETAIL -> {
+                NimaDetailProcess.processResponse(event.response)
+            }
             RequestType.ALI -> {
                 AliProcess.processResponse(event.response)
             }
@@ -29,9 +35,16 @@ class MessagePresenter {
             RequestType.BTDB -> {
                 BtdbProcess.processResponse(event.response)
             }
+            else -> {
+            }
         }
     }
 
-    fun processRequestFail(event: RequestFailEvent) {
+    fun processRequestFail(context: Context, event: RequestFailEvent) {
+        Toast.makeText(
+                context,
+                "请求 ${event.requestUrl} 链接发生异常：${event.exception}",
+                Toast.LENGTH_LONG)
+                .show()
     }
 }

@@ -10,9 +10,9 @@
 
     <string-array name="main_tab_text">
         <item>尼玛搜</item>
-        <item>磁力猫</item>
-        <item>阿狸</item>
-        <item>BTDB</item>
+        <!--<item>磁力猫</item>-->
+        <!--<item>阿狸</item>-->
+        <!--<item>BTDB</item>-->
     </string-array>
 
 </resources>

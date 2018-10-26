@@ -7,6 +7,10 @@ import okhttp3.*
 import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 import java.io.IOException
+import java.lang.Exception
+import java.net.InetSocketAddress
+import java.net.Proxy
+import java.nio.charset.Charset
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -75,7 +79,7 @@ class NetworkPresenter private constructor() {
             }
 
             override fun onFailure(call: Call, exception: IOException) {
-                EventBus.getDefault().post(RequestFailEvent(exception))
+                EventBus.getDefault().post(RequestFailEvent(call.request().url().toString(), exception))
                 Timber.d("Get content fail, exception: $exception.")
 
                 isRunning = false
@@ -86,8 +90,8 @@ class NetworkPresenter private constructor() {
 
     private object Holder {val INSTANCE = NetworkPresenter()}
     companion object {
-        private const val CONNECTION_TIMEOUT = 3L
-        private const val READ_TIMEOUT = 3L
+        private const val CONNECTION_TIMEOUT = 20L
+        private const val READ_TIMEOUT = 20L
 
          val instance: NetworkPresenter by lazy { Holder.INSTANCE }
     }

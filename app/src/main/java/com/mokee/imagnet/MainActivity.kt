@@ -45,9 +45,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         tabArray = resources.getStringArray(R.array.main_tab_text).toList()
         // new fragments
         fragmentArray.add(NiMaFragment())
-        fragmentArray.add(CilicatFragment())
-        fragmentArray.add(AliFragment())
-        fragmentArray.add(BtdbFragment())
+//        fragmentArray.add(CilicatFragment())
+//        fragmentArray.add(AliFragment())
+//        fragmentArray.add(BtdbFragment())
     }
 
     /** Init bar */
@@ -67,11 +67,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun initView() {
         initViewPager()
-
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
@@ -98,9 +93,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mMessagePresenter.processResponse(event)
     }
 
-    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public fun onRequestFail(event: RequestFailEvent) {
-        mMessagePresenter.processRequestFail(event)
+        mMessagePresenter.processRequestFail(this.applicationContext, event)
     }
 
 

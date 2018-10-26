@@ -10,6 +10,7 @@ import okhttp3.Response
 import org.greenrobot.eventbus.EventBus
 import org.jsoup.Jsoup
 import timber.log.Timber
+import java.util.*
 
 object NimaItemProcess : ProcessResponse(){
     override fun processResponse(response: Response) {
@@ -20,7 +21,7 @@ object NimaItemProcess : ProcessResponse(){
     }
 
     private fun process(htmlContent: String) {
-        val itemList = arrayListOf<NimaItem>()
+        val itemList = LinkedList<NimaItem>()
 
         val document = Jsoup.parse(htmlContent)
         val tableElements = document.getElementsByClass(ITEM_TABLE_CALSS_NAME)
@@ -62,6 +63,7 @@ object NimaItemProcess : ProcessResponse(){
                         !TextUtils.isEmpty(detail) &&
                         !TextUtils.isEmpty(magnet)) {
                     itemList.add(NimaItem(title, href, detail, magnet))
+//                    Timber.d("Nima item: ${itemList[itemList.size - 1]}")
                 } else {
                     Timber.d("Nima item all attr has one empty.")
                 }
@@ -80,6 +82,5 @@ object NimaItemProcess : ProcessResponse(){
     private const val ITEM_CLASS_NAME = "x-item"
 
     private const val ITEM_TITLE_CALSS_NAME = "title"
-    private const val ITEM_FILES_CALSS_NAME = "files"
     private const val ITEM_TAIL_CALSS_NAME = "tail"
 }

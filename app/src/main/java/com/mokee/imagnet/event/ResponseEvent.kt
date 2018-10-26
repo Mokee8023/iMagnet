@@ -11,5 +11,7 @@ enum class RequestType {
     BTDB,
 
     NIMA_ITEM,
-    CILICAT_ITEM
+    CILICAT_ITEM,
+
+    NIMA_DETAIL
 }

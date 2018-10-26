@@ -1,12 +1,14 @@
 package com.mokee.imagnet.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.mokee.imagnet.R
+import com.mokee.imagnet.activity.nima.NimaDetailsActivity
 import com.mokee.imagnet.model.NimaItem
 
 class NimaHomeAdapter : RecyclerView.Adapter<NimaHomeAdapter.NimaHolder> {
@@ -30,6 +32,12 @@ class NimaHomeAdapter : RecyclerView.Adapter<NimaHomeAdapter.NimaHolder> {
     override fun onBindViewHolder(holder: NimaHolder, position: Int) {
         holder.title.text = mHomeItemList[position].title
         holder.details.text = mHomeItemList[position].detail
+
+        holder.title.setOnClickListener {
+            val nimaDetail = Intent(mContext, NimaDetailsActivity::class.java)
+            nimaDetail.putExtra(NimaDetailsActivity.NIMA_ITEM_DETAIL, mHomeItemList[position].url)
+            mContext.startActivity(nimaDetail)
+        }
     }
 
     class NimaHolder(view: View) : RecyclerView.ViewHolder(view) {
