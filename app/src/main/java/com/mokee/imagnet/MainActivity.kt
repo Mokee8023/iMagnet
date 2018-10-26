@@ -1,18 +1,25 @@
 package com.mokee.imagnet
 
+import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.SearchView
+import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
+import com.mokee.imagnet.activity.nima.NimaSearchActivity
+import com.mokee.imagnet.constrant.MagnetConstrant
 import com.mokee.imagnet.event.RequestFailEvent
+import com.mokee.imagnet.event.RequestType
 import com.mokee.imagnet.event.ResponseEvent
 import com.mokee.imagnet.fragment.*
 import com.mokee.imagnet.presenter.MessagePresenter
+import com.mokee.imagnet.presenter.NetworkPresenter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -20,6 +27,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
+import java.net.URLEncoder
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var tabArray: List<String>
@@ -27,6 +35,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     // Presenter
     private lateinit var mMessagePresenter: MessagePresenter
+
+    private lateinit var mSearchView: SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,12 +120,39 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main, menu)
+        val menuItem = menu.findItem(R.id.action_search)
+        mSearchView = menuItem.actionView as SearchView
+
+        initSearchView()
         return true
+    }
+
+    private fun initSearchView() {
+        mSearchView.isSubmitButtonEnabled = true
+        mSearchView.queryHint = "Search..."
+        mSearchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String?): Boolean { return true }
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let {
+                    if(!TextUtils.isEmpty(it)) {
+                        val queryUrl = MagnetConstrant.NIMA_SEARCH_URL + URLEncoder.encode(it) + "-hot-desc-1"
+                        NetworkPresenter.instance.getHtmlContent(
+                                NetworkPresenter.NetworkItem(RequestType.SEARCH, queryUrl))
+
+                        startActivity(Intent(this@MainActivity, NimaSearchActivity::class.java))
+                    } else {
+                        Toast.makeText(this@MainActivity, "查询的内容为空.", Toast.LENGTH_SHORT).show()
+                        Timber.d("Query Text is empty.")
+                    }
+                }
+                return true
+            }
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_search -> true
             else -> super.onOptionsItemSelected(item)
         }
     }

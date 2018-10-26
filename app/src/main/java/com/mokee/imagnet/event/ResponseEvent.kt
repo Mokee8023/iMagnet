@@ -13,5 +13,7 @@ enum class RequestType {
     NIMA_ITEM,
     CILICAT_ITEM,
 
-    NIMA_DETAIL
+    NIMA_DETAIL,
+
+    SEARCH
 }
