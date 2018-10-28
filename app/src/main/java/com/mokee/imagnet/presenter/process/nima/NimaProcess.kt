@@ -2,8 +2,7 @@ package com.mokee.imagnet.presenter.process.nima
 
 import com.mokee.imagnet.constrant.MagnetConstrant
 import com.mokee.imagnet.model.NimaHomeItem
-import com.mokee.imagnet.event.RequestType
-import com.mokee.imagnet.fragment.NiMaFragment
+import com.mokee.imagnet.model.RequestType
 import com.mokee.imagnet.presenter.NetworkPresenter
 import com.mokee.imagnet.presenter.process.ProcessResponse
 import okhttp3.Response

@@ -1,16 +1,12 @@
 package com.mokee.imagnet.presenter
 
 import com.mokee.imagnet.event.RequestFailEvent
-import com.mokee.imagnet.event.RequestType
-import com.mokee.imagnet.event.ResponseEvent
+import com.mokee.imagnet.model.RequestType
+import com.mokee.imagnet.model.ResponseEvent
 import okhttp3.*
 import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 import java.io.IOException
-import java.lang.Exception
-import java.net.InetSocketAddress
-import java.net.Proxy
-import java.nio.charset.Charset
 import java.util.*
 import java.util.concurrent.TimeUnit
 

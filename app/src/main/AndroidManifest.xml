@@ -22,6 +22,7 @@
         </activity>
 
         <activity android:name=".activity.nima.NimaDetailsActivity" />
+        <activity android:name=".activity.nima.NimaSearchActivity" />
     </application>
 
 </manifest>

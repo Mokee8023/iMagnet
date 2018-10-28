@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.mokee.imagnet.R
 import com.mokee.imagnet.model.CilicatItem
-import com.mokee.imagnet.model.NimaItem
 
 class CilicatHomeAdapter : RecyclerView.Adapter<CilicatHomeAdapter.CilicatHolder> {
     private var mContext: Context
@@ -20,7 +19,7 @@ class CilicatHomeAdapter : RecyclerView.Adapter<CilicatHomeAdapter.CilicatHolder
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CilicatHolder {
-        val view = LayoutInflater.from(mContext).inflate(R.layout.home_list_item, parent, false)
+        val view = LayoutInflater.from(mContext).inflate(R.layout.nima_list_item, parent, false)
         return CilicatHolder(view)
     }
 
@@ -34,7 +33,7 @@ class CilicatHomeAdapter : RecyclerView.Adapter<CilicatHomeAdapter.CilicatHolder
     }
 
     class CilicatHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var title: TextView = view.findViewById(R.id.home_title)
-        var details : TextView = view.findViewById(R.id.home_details)
+        var title: TextView = view.findViewById(R.id.nima_title)
+        var details : TextView = view.findViewById(R.id.nima_details)
     }
 }

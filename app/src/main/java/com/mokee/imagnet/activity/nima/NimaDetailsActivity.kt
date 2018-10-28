@@ -8,25 +8,26 @@ import android.support.v7.widget.RecyclerView
 import android.text.SpannableString
 import android.text.TextUtils
 import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
 import android.text.style.URLSpan
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
-import android.widget.TextSwitcher
 import android.widget.TextView
+import android.widget.Toast
 import android.widget.ViewSwitcher
 import com.mokee.imagnet.R
 import com.mokee.imagnet.event.NimaDetailItemEvent
 import com.mokee.imagnet.event.RequestFailEvent
-import com.mokee.imagnet.event.RequestType
-import com.mokee.imagnet.fragment.NiMaFragment
+import com.mokee.imagnet.model.RequestType
 import com.mokee.imagnet.model.NimaFuli
+import com.mokee.imagnet.model.NimaItemDetail
 import com.mokee.imagnet.presenter.NetworkPresenter
+import com.mokee.imagnet.utils.ClipboardUtil
+import com.mokee.imagnet.utils.MagnetUtil
+import com.mokee.imagnet.utils.ThunderUtil
 import kotlinx.android.synthetic.main.activity_nima_detail.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -42,6 +43,8 @@ class NimaDetailsActivity : AppCompatActivity(){
     private lateinit var mAdapter: NimaDetailAdapter
 
     private lateinit var fuliList: List<NimaFuli>
+
+    private var mNimaItemDetail: NimaItemDetail? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,6 +81,32 @@ class NimaDetailsActivity : AppCompatActivity(){
         nima_detail_refreshLayout.setOnRefreshListener {
             loadData()
             it.finishRefresh(REFRESH_DEFAULT_TIME * 1000, false)
+        }
+
+        nima_detail_magnet.setOnClickListener {
+            if(!TextUtils.isEmpty(mNimaItemDetail?.magnet)) {
+                MagnetUtil.startMagnet(this@NimaDetailsActivity, mNimaItemDetail!!.magnet)
+            }
+        }
+        nima_detail_magnet.setOnLongClickListener {
+            if(!TextUtils.isEmpty(mNimaItemDetail?.magnet)) {
+                ClipboardUtil.copyToClipboard(this@NimaDetailsActivity, mNimaItemDetail!!.magnet)
+                Toast.makeText(this, "Magnet链接已复制", Toast.LENGTH_SHORT).show()
+            }
+            true
+        }
+
+        nima_detail_xunlei.setOnClickListener {
+            if(!TextUtils.isEmpty(mNimaItemDetail?.thunder)) {
+                ThunderUtil.startThunder(this@NimaDetailsActivity, mNimaItemDetail!!.thunder)
+            }
+        }
+        nima_detail_xunlei.setOnLongClickListener {
+            if(!TextUtils.isEmpty(mNimaItemDetail?.thunder)) {
+                ClipboardUtil.copyToClipboard(this@NimaDetailsActivity, mNimaItemDetail!!.magnet)
+                Toast.makeText(this, "迅雷链接已复制", Toast.LENGTH_SHORT).show()
+            }
+            true
         }
     }
 
@@ -119,8 +148,18 @@ class NimaDetailsActivity : AppCompatActivity(){
     @Subscribe(threadMode = ThreadMode.MAIN)
     public fun onDetailItem(event: NimaDetailItemEvent) {
         Timber.d("Received nima detail item event $event")
+        mNimaItemDetail = event.item
+
         nima_detail_refreshLayout.finishRefresh(true)
         nima_detail_loading.visibility = View.GONE
+
+        if(!TextUtils.isEmpty(event.item.magnet)) {
+            nima_detail_magnet.visibility = View.VISIBLE
+        }
+
+        if(!TextUtils.isEmpty(event.item.thunder)) {
+            nima_detail_xunlei.visibility = View.VISIBLE
+        }
 
         processDetail(event)
     }

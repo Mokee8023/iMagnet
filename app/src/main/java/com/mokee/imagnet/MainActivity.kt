@@ -15,8 +15,8 @@ import android.widget.Toast
 import com.mokee.imagnet.activity.nima.NimaSearchActivity
 import com.mokee.imagnet.constrant.MagnetConstrant
 import com.mokee.imagnet.event.RequestFailEvent
-import com.mokee.imagnet.event.RequestType
-import com.mokee.imagnet.event.ResponseEvent
+import com.mokee.imagnet.model.RequestType
+import com.mokee.imagnet.model.ResponseEvent
 import com.mokee.imagnet.fragment.*
 import com.mokee.imagnet.presenter.MessagePresenter
 import com.mokee.imagnet.presenter.NetworkPresenter
@@ -28,6 +28,11 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
 import java.net.URLEncoder
+import android.support.v4.view.MenuItemCompat.getActionView
+import android.view.KeyEvent
+import android.view.KeyEvent.KEYCODE_BACK
+
+
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var tabArray: List<String>
@@ -137,9 +142,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     if(!TextUtils.isEmpty(it)) {
                         val queryUrl = MagnetConstrant.NIMA_SEARCH_URL + URLEncoder.encode(it) + "-hot-desc-1"
                         NetworkPresenter.instance.getHtmlContent(
-                                NetworkPresenter.NetworkItem(RequestType.SEARCH, queryUrl))
+                                NetworkPresenter.NetworkItem(RequestType.NIMA_SEARCH, queryUrl))
 
-                        startActivity(Intent(this@MainActivity, NimaSearchActivity::class.java))
+                        mSearchView.isIconified = true
+                        mSearchView.isIconified = true
+
+                        val searchIntent = Intent(this@MainActivity, NimaSearchActivity::class.java)
+                        searchIntent.putExtra(NimaSearchActivity.SEARCH_EXTRA_URL, queryUrl)
+                        searchIntent.putExtra(NimaSearchActivity.SEARCH_TEXT, it)
+                        startActivity(searchIntent)
                     } else {
                         Toast.makeText(this@MainActivity, "查询的内容为空.", Toast.LENGTH_SHORT).show()
                         Timber.d("Query Text is empty.")
@@ -148,6 +159,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 return true
             }
         })
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (!mSearchView.isIconified) {
+                mSearchView.isIconified = true
+                return true
+            }
+        }
+        return super.onKeyDown(keyCode, event)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

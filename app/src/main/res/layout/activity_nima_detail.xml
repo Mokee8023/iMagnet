@@ -99,21 +99,24 @@
                 android:visibility="invisible" />
 
             <ImageButton
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:id="@+id/nima_detail_magnet"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:layout_marginLeft="10dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/xunlei" />
+                android:src="@drawable/magnet"
+                android:visibility="gone" />
 
             <ImageButton
                 android:id="@+id/nima_detail_xunlei"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:layout_marginLeft="20dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/xunlei" />
+                android:src="@drawable/xunlei"
+                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>

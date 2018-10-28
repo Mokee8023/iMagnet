@@ -11,9 +11,8 @@ import android.view.ViewGroup
 import com.mokee.imagnet.R
 import com.mokee.imagnet.adapter.CilicatHomeAdapter
 import com.mokee.imagnet.constrant.MagnetConstrant
-import com.mokee.imagnet.event.RequestType
+import com.mokee.imagnet.model.RequestType
 import com.mokee.imagnet.model.CilicatItem
-import com.mokee.imagnet.model.NimaItem
 import com.mokee.imagnet.presenter.NetworkPresenter
 import org.greenrobot.eventbus.EventBus
 import timber.log.Timber

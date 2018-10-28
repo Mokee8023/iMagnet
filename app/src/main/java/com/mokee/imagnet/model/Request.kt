@@ -1,4 +1,4 @@
-package com.mokee.imagnet.event
+package com.mokee.imagnet.model
 
 import okhttp3.Response
 
@@ -15,5 +15,5 @@ enum class RequestType {
 
     NIMA_DETAIL,
 
-    SEARCH
+    NIMA_SEARCH
 }

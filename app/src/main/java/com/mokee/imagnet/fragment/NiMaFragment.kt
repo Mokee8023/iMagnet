@@ -10,15 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import com.github.ybq.android.spinkit.SpinKitView
 import com.mokee.imagnet.R
-import com.mokee.imagnet.adapter.NimaHomeAdapter
+import com.mokee.imagnet.adapter.NimaAdapter
 import com.mokee.imagnet.constrant.MagnetConstrant
 import com.mokee.imagnet.event.NimaHomeItemEvent
 import com.mokee.imagnet.event.RequestFailEvent
-import com.mokee.imagnet.event.RequestType
+import com.mokee.imagnet.model.RequestType
 import com.mokee.imagnet.model.NimaItem
 import com.mokee.imagnet.presenter.NetworkPresenter
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
-import kotlinx.android.synthetic.main.fragment_nima.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -33,7 +32,7 @@ class NiMaFragment : Fragment() {
 
     private var homeItemList: MutableList<NimaItem> = mutableListOf()
     private lateinit var mLayoutManager: LinearLayoutManager
-    private lateinit var mAdapter: NimaHomeAdapter
+    private lateinit var mAdapter: NimaAdapter
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -72,7 +71,7 @@ class NiMaFragment : Fragment() {
 
     private fun initView() {
         mLayoutManager = LinearLayoutManager(this.context)
-        mAdapter = NimaHomeAdapter(this.context!!, homeItemList)
+        mAdapter = NimaAdapter(this.context!!, homeItemList)
 
         mHomeListView.apply {
             setHasFixedSize(true)

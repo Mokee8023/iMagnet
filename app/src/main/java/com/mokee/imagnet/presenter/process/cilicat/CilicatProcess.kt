@@ -1,9 +1,8 @@
 package com.mokee.imagnet.presenter.process.cilicat
 
 import com.mokee.imagnet.constrant.MagnetConstrant
-import com.mokee.imagnet.event.RequestType
+import com.mokee.imagnet.model.RequestType
 import com.mokee.imagnet.model.CilicatHomeItem
-import com.mokee.imagnet.model.NimaHomeItem
 import com.mokee.imagnet.presenter.NetworkPresenter
 import com.mokee.imagnet.presenter.process.ProcessResponse
 import okhttp3.Response
