@@ -2,9 +2,13 @@
 
 buildscript {
     ext.kotlin_version = '1.2.71'
+    ext.torrentstreamVersion = '1.2.0.16'
+    ext.bt_version = '1.7'
     repositories {
         google()
         jcenter() { url 'http://jcenter.bintray.com/' }
+        maven { url "http://jitpack.io" }
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.0'
@@ -20,6 +24,7 @@ allprojects {
         google()
         jcenter() { url 'http://jcenter.bintray.com/' }
         maven { url "https://jitpack.io" }
+        mavenCentral()
     }
 }
 

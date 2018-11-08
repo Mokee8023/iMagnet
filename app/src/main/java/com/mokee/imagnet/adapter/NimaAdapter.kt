@@ -13,6 +13,7 @@ import android.widget.Toast
 import com.mokee.imagnet.R
 import com.mokee.imagnet.activity.nima.NimaDetailsActivity
 import com.mokee.imagnet.model.NimaItem
+import com.mokee.imagnet.presenter.MagnetPresenter
 import com.mokee.imagnet.utils.ClipboardUtil
 import com.mokee.imagnet.utils.MagnetUtil
 import com.mokee.imagnet.utils.ThunderUtil
@@ -56,6 +57,12 @@ class NimaAdapter : RecyclerView.Adapter<NimaAdapter.NimaHolder> {
                 Toast.makeText(mContext, "Magnet链接已复制", Toast.LENGTH_SHORT).show()
             }
             true
+        }
+        holder.magnet.setOnClickListener {
+            val magnetUrl = mNimaItemList[position].magnet
+            if(!TextUtils.isEmpty(magnetUrl)) {
+                MagnetPresenter.instance.magnet(magnetUrl)
+            }
         }
     }
 

@@ -8,7 +8,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.mokee.imagnet"
-        minSdkVersion 21
+        minSdkVersion 26
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -19,6 +19,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
     }
 }
 
@@ -42,4 +46,10 @@ dependencies {
 
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
     implementation 'com.github.ybq:Android-SpinKit:1.0.4'
+//    implementation 'com.github.masterwok:simple-torrent-android:0.5.0'
+
+    implementation "com.github.atomashpolskiy:bt-core:$bt_version"
+    implementation "com.github.atomashpolskiy:bt-http-tracker-client:$bt_version"
+    implementation "com.github.atomashpolskiy:bt-dht:$bt_version"
+//    implementation "com.github.atomashpolskiy:bt-upnp:$bt_version"
 }
