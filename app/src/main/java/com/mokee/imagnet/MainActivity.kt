@@ -28,10 +28,9 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
 import java.net.URLEncoder
-import android.support.v4.view.MenuItemCompat.getActionView
 import android.view.KeyEvent
-import android.view.KeyEvent.KEYCODE_BACK
-
+import com.mokee.imagnet.utils.SoftKeyBoardListener
+import com.mokee.imagnet.utils.SoftKeyBoardListener.OnSoftKeyBoardChangeListener
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -53,6 +52,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         initBar()
         initView()
         initPresenter()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        SoftKeyBoardListener(this, object: OnSoftKeyBoardChangeListener {
+            override fun keyBoardShow(height: Int) { }
+            override fun keyBoardHide(height: Int) {
+                mSearchView.clearFocus()
+                toolbar.isFocusable = true
+                toolbar.isFocusableInTouchMode = true
+                toolbar.requestFocus()
+            }
+        })
     }
 
     /** Init data */
@@ -113,8 +125,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mMessagePresenter.processRequestFail(this.applicationContext, event)
     }
 
-
-
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
@@ -133,6 +143,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun initSearchView() {
+        mSearchView.maxWidth = Integer.MAX_VALUE
         mSearchView.isSubmitButtonEnabled = true
         mSearchView.queryHint = "Search..."
         mSearchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
