@@ -31,3 +31,6 @@ data class CilicatFileList(
         val sharpness: String,
         val caption: String,
         val publishTime: String) : Item()
+
+data class CilicatSearchItem(val title: String, val url: String, val attrs: CilicatSearchItemAttrs) : Item()
+data class CilicatSearchItemAttrs(val fileSize: String, val fileCount: String, val createTime: String)

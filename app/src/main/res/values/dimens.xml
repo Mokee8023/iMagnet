@@ -19,4 +19,5 @@
     <dimen name="cilicat_home_item_image_width">60dp</dimen>
     <dimen name="cilicat_home_item_image_height">120dp</dimen>
     <dimen name="cilicat_download_icon_size">20dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>

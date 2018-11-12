@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
     <com.github.ybq.android.spinkit.SpinKitView
-        android:id="@+id/nima_search_loading"
+        android:id="@+id/search_cilicat_loading"
         style="@style/SpinKitView.ThreeBounce"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,7 +17,7 @@
         app:SpinKit_Color="@color/colorPrimary" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/nima_search_refreshLayout"
+        android:id="@+id/search_cilicat_refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srlEnablePreviewInEditMode="true">
@@ -25,13 +27,14 @@
             android:layout_height="wrap_content" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/nima_search_list"
+            android:id="@+id/search_cilicat_list"
+            android:name="com.mokee.imagnet.fragment.search.CilicatSearchFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:context=".fragment.search.CilicatSearchFragment" />
 
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
 </LinearLayout>

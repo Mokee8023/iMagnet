@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.github.ybq.android.spinkit.SpinKitView
 import com.mokee.imagnet.R
-import com.mokee.imagnet.activity.nima.NimaSearchActivity
 import com.mokee.imagnet.adapter.CilicatHomeAdapter
 import com.mokee.imagnet.constrant.MagnetConstrant
 import com.mokee.imagnet.event.CilicatHomeItemEvent

@@ -12,7 +12,7 @@ import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import com.mokee.imagnet.activity.nima.NimaSearchActivity
+import com.mokee.imagnet.activity.SearchActivity
 import com.mokee.imagnet.constrant.MagnetConstrant
 import com.mokee.imagnet.event.RequestFailEvent
 import com.mokee.imagnet.model.RequestType
@@ -151,16 +151,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {
                     if(!TextUtils.isEmpty(it)) {
-                        val queryUrl = MagnetConstrant.NIMA_SEARCH_URL + URLEncoder.encode(it) + "-hot-desc-1"
-                        NetworkPresenter.instance.getHtmlContent(
-                                NetworkPresenter.NetworkItem(RequestType.NIMA_SEARCH, queryUrl))
-
                         mSearchView.isIconified = true
                         mSearchView.isIconified = true
 
-                        val searchIntent = Intent(this@MainActivity, NimaSearchActivity::class.java)
-                        searchIntent.putExtra(NimaSearchActivity.SEARCH_EXTRA_URL, queryUrl)
-                        searchIntent.putExtra(NimaSearchActivity.SEARCH_TEXT, it)
+                        val searchIntent = Intent(this@MainActivity, SearchActivity::class.java)
+                        searchIntent.putExtra(SearchActivity.SEARCH_TEXT, it)
                         startActivity(searchIntent)
                     } else {
                         Toast.makeText(this@MainActivity, "查询的内容为空.", Toast.LENGTH_SHORT).show()
