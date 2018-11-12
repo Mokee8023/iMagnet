@@ -8,7 +8,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.mokee.imagnet"
-        minSdkVersion 26
+        minSdkVersion 21
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -46,10 +46,12 @@ dependencies {
 
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
     implementation 'com.github.ybq:Android-SpinKit:1.0.4'
-//    implementation 'com.github.masterwok:simple-torrent-android:0.5.0'
 
-    implementation "com.github.atomashpolskiy:bt-core:$bt_version"
-    implementation "com.github.atomashpolskiy:bt-http-tracker-client:$bt_version"
-    implementation "com.github.atomashpolskiy:bt-dht:$bt_version"
+//    implementation "com.github.atomashpolskiy:bt-core:$bt_version"
+//    implementation "com.github.atomashpolskiy:bt-http-tracker-client:$bt_version"
+//    implementation "com.github.atomashpolskiy:bt-dht:$bt_version"
 //    implementation "com.github.atomashpolskiy:bt-upnp:$bt_version"
+
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 }

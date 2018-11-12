@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         tabArray = resources.getStringArray(R.array.main_tab_text).toList()
         // new fragments
         fragmentArray.add(NiMaFragment())
-//        fragmentArray.add(CilicatFragment())
+        fragmentArray.add(CilicatFragment())
 //        fragmentArray.add(AliFragment())
 //        fragmentArray.add(BtdbFragment())
     }

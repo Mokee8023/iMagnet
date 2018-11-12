@@ -58,12 +58,12 @@ class NimaAdapter : RecyclerView.Adapter<NimaAdapter.NimaHolder> {
             }
             true
         }
-        holder.magnet.setOnClickListener {
-            val magnetUrl = mNimaItemList[position].magnet
-            if(!TextUtils.isEmpty(magnetUrl)) {
-                MagnetPresenter.instance.magnet(magnetUrl)
-            }
-        }
+//        holder.magnet.setOnClickListener {
+//            val magnetUrl = mNimaItemList[position].magnet
+//            if(!TextUtils.isEmpty(magnetUrl)) {
+//                MagnetPresenter.instance.magnet(magnetUrl)
+//            }
+//        }
     }
 
     class NimaHolder(view: View) : RecyclerView.ViewHolder(view) {

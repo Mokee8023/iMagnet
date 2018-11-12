@@ -16,4 +16,18 @@ data class NimaItemDetail(
 )
 data class NimaFuli(val href: String, val text: String) :Item()
 
-data class CilicatItem(val title: String, val url: String, val detail: String, val magnet: String) : Item()
+data class CilicatItem(val title: String, val url: String, val imageUrl: String, val detailArray: ArrayList<String>) : Item()
+data class CilicatItemDetail(
+        val title: String,
+        val attributes: List<String>,
+        val details: String,
+        val fileList: List<CilicatFileList>
+)
+
+data class CilicatFileList(
+        val name: String,
+        val magnet: String,
+        val size: String,
+        val sharpness: String,
+        val caption: String,
+        val publishTime: String) : Item()

@@ -11,8 +11,12 @@
     <dimen name="home_items_margin">10dp</dimen>
     <dimen name="home_cardview_padding">10dp</dimen>
 
-    <dimen name="nima_magnet_icon_size">30dp</dimen>
-    <dimen name="nima_thunder_icon_size">30dp</dimen>
+    <dimen name="nima_magnet_icon_size">20dp</dimen>
+    <dimen name="nima_thunder_icon_size">20dp</dimen>
     <dimen name="home_card_corner_radius">5dp</dimen>
     <dimen name="home_card_elevation">5dp</dimen>
+
+    <dimen name="cilicat_home_item_image_width">60dp</dimen>
+    <dimen name="cilicat_home_item_image_height">120dp</dimen>
+    <dimen name="cilicat_download_icon_size">20dp</dimen>
 </resources>
