@@ -34,3 +34,17 @@ data class CilicatFileList(
 
 data class CilicatSearchItem(val title: String, val url: String, val attrs: CilicatSearchItemAttrs) : Item()
 data class CilicatSearchItemAttrs(val fileSize: String, val fileCount: String, val createTime: String)
+
+data class CilicatSearchDetail(
+        val title: String,
+        val magnet: String,
+        val hash: String,
+        val fileCount: String,
+        val fileSize: String,
+        val receivedTime: String,
+        val downloadSpeed: String,
+        val fileList: List<String>,
+        val recentList: List<CilicatRecentItem>
+)
+
+data class CilicatRecentItem(val href: String, val text: String)

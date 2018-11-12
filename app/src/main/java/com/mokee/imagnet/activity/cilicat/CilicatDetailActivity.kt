@@ -84,7 +84,6 @@ class CilicatDetailActivity: AppCompatActivity() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public fun onRequestFail(event: RequestFailEvent) {
         cilicat_detail_loading.visibility = View.GONE
-        Integer.MAX_VALUE
     }
 
     private fun loadData() {

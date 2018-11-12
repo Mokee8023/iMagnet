@@ -2,21 +2,18 @@ package com.mokee.imagnet.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import com.bumptech.glide.Glide
 import com.mokee.imagnet.R
 import com.mokee.imagnet.activity.cilicat.CilicatDetailActivity
-import com.mokee.imagnet.activity.nima.NimaDetailsActivity
-import com.mokee.imagnet.model.CilicatItem
+import com.mokee.imagnet.activity.cilicat.CilicatSearchDetailActivity
+import com.mokee.imagnet.constrant.MagnetConstrant
 import com.mokee.imagnet.model.CilicatSearchItem
-import java.lang.StringBuilder
 
 class CilicatSearchAdapter : RecyclerView.Adapter<CilicatSearchAdapter.CilicatSearchHolder> {
     private var mContext: Context
@@ -47,9 +44,16 @@ class CilicatSearchAdapter : RecyclerView.Adapter<CilicatSearchAdapter.CilicatSe
         holder.attrs.text = sb.toString()
 
         holder.card.setOnClickListener {
-//            val cilicatDetail = Intent(mContext, CilicatDetailActivity::class.java)
-//            cilicatDetail.putExtra(CilicatDetailActivity.CILICAT_ITEM_DETAIL, mHomeItemList[position].url)
-//            mContext.startActivity(cilicatDetail)
+            if(mItemList[position].url.contains(MagnetConstrant.CILICAT_HOME_URL)) {
+                val cilicatSearchDetail = Intent(mContext, CilicatSearchDetailActivity::class.java)
+                cilicatSearchDetail.putExtra(CilicatSearchDetailActivity.CILICAT_SEARCH_ITEM_DETAIL, mItemList[position].url)
+                mContext.startActivity(cilicatSearchDetail)
+            } else {
+                val urlIntent = Intent()
+                urlIntent.action = "android.intent.action.VIEW"
+                urlIntent.data = Uri.parse(mItemList[position].url)
+                mContext.startActivity(urlIntent)
+            }
         }
     }
 

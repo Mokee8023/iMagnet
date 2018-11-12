@@ -35,7 +35,7 @@ object CilicatSearchProcess : ProcessResponse() {
             if(titleClass.size > 0) {
                 title = titleClass[0].text()
                 href = titleClass[0].attr("href")
-                if(!TextUtils.isEmpty(href)) {
+                if(!TextUtils.isEmpty(href) && !href.contains("baidu")) {
                     href = MagnetConstrant.CILICAT_HOME_URL + href
                 }
             }

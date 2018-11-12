@@ -7,10 +7,7 @@ import com.mokee.imagnet.model.RequestType
 import com.mokee.imagnet.model.ResponseEvent
 import com.mokee.imagnet.presenter.process.ali.AliProcess
 import com.mokee.imagnet.presenter.process.btdb.BtdbProcess
-import com.mokee.imagnet.presenter.process.cilicat.CilicatDetailProcess
-import com.mokee.imagnet.presenter.process.cilicat.CilicatItemProcess
-import com.mokee.imagnet.presenter.process.cilicat.CilicatProcess
-import com.mokee.imagnet.presenter.process.cilicat.CilicatSearchProcess
+import com.mokee.imagnet.presenter.process.cilicat.*
 import com.mokee.imagnet.presenter.process.nima.NimaDetailProcess
 import com.mokee.imagnet.presenter.process.nima.NimaItemProcess
 import com.mokee.imagnet.presenter.process.nima.NimaProcess
@@ -44,6 +41,9 @@ class MessagePresenter {
             }
             RequestType.CILICAT_SEARCH -> {
                 CilicatSearchProcess.processResponse(event.response)
+            }
+            RequestType.CILICAT_SEARCH_DETAIL -> {
+                CilicatSearchDetailProcess.processResponse(event.response)
             }
             RequestType.ALI -> {
                 AliProcess.processResponse(event.response)
