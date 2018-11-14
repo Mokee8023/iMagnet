@@ -9,17 +9,19 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.text.TextUtils
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.mokee.imagnet.activity.SearchActivity
-import com.mokee.imagnet.constrant.MagnetConstrant
 import com.mokee.imagnet.event.RequestFailEvent
-import com.mokee.imagnet.model.RequestType
+import com.mokee.imagnet.fragment.AliFragment
+import com.mokee.imagnet.fragment.CilicatFragment
+import com.mokee.imagnet.fragment.NiMaFragment
 import com.mokee.imagnet.model.ResponseEvent
-import com.mokee.imagnet.fragment.*
 import com.mokee.imagnet.presenter.MessagePresenter
-import com.mokee.imagnet.presenter.NetworkPresenter
+import com.mokee.imagnet.utils.SoftKeyBoardListener
+import com.mokee.imagnet.utils.SoftKeyBoardListener.OnSoftKeyBoardChangeListener
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -27,10 +29,6 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
-import java.net.URLEncoder
-import android.view.KeyEvent
-import com.mokee.imagnet.utils.SoftKeyBoardListener
-import com.mokee.imagnet.utils.SoftKeyBoardListener.OnSoftKeyBoardChangeListener
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -73,7 +71,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // new fragments
         fragmentArray.add(NiMaFragment())
         fragmentArray.add(CilicatFragment())
-//        fragmentArray.add(AliFragment())
+        fragmentArray.add(AliFragment())
 //        fragmentArray.add(BtdbFragment())
     }
 

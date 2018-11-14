@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.mokee.imagnet.R
 import com.mokee.imagnet.event.CilicatSearchDetailEvent
@@ -149,12 +150,7 @@ class CilicatSearchDetailActivity : AppCompatActivity() {
         override fun onBindViewHolder(holder: CilicatSearchDetailRecentHolder, position: Int) {
             holder.recent.text = mRecentList[position].text
 
-            holder.recent.setOnClickListener {
-//                val urlIntent = Intent()
-//                urlIntent.action = "android.intent.action.VIEW"
-//                urlIntent.data = Uri.parse(mRecentList[position].href)
-//                mContext.startActivity(urlIntent)
-
+            holder.bar.setOnClickListener {
                 val cilicatSearchDetail = Intent(mContext, CilicatSearchDetailActivity::class.java)
                 cilicatSearchDetail.putExtra(CilicatSearchDetailActivity.CILICAT_SEARCH_ITEM_DETAIL, mRecentList[position].href)
                 mContext.startActivity(cilicatSearchDetail)
@@ -162,6 +158,7 @@ class CilicatSearchDetailActivity : AppCompatActivity() {
         }
 
         class CilicatSearchDetailRecentHolder(view: View) : RecyclerView.ViewHolder(view) {
+            var bar: LinearLayout = view.findViewById(R.id.cilicat_search_detail_file_list_item_bar)
             var recent: TextView = view.findViewById(R.id.cilicat_search_detail_file_list_item_name)
         }
     }

@@ -62,6 +62,11 @@ class NetworkPresenter private constructor() {
 
         val requestBuilder = Request.Builder()
         requestBuilder.get().url(item.url)
+        val ua = getUserAgent()
+        if(ua.isNotEmpty()) {
+            requestBuilder.removeHeader("User-Agent").addHeader("User-Agent", getUserAgent())
+        }
+
         val resultCall = mOkhttpClient.newCall(requestBuilder.build())
 
         resultCall.enqueue(object : Callback {
@@ -82,6 +87,31 @@ class NetworkPresenter private constructor() {
                 next()
             }
         })
+    }
+
+    /**
+     * Get user agent
+     */
+    private fun getUserAgent(): String {
+        var userAgent: String? = null
+        try {
+            userAgent = System.getProperty("http.agent")
+        } catch (e: Exception) {
+            Timber.e("Get http user agent happen exception: $e")
+        }
+        val sb = StringBuffer()
+        userAgent?.let {
+            (0 until userAgent.length).forEach {
+                val c = userAgent[it]
+                if (c <= '\u001f' || c >= '\u007f') {
+                    sb.append(String.format("\\u%04x", c.toInt()))
+                } else {
+                    sb.append(c)
+                }
+            }
+        }
+
+        return sb.toString()
     }
 
     private object Holder {val INSTANCE = NetworkPresenter()}

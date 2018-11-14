@@ -5,6 +5,7 @@ import android.widget.Toast
 import com.mokee.imagnet.event.RequestFailEvent
 import com.mokee.imagnet.model.RequestType
 import com.mokee.imagnet.model.ResponseEvent
+import com.mokee.imagnet.presenter.process.ali.AliItemProcess
 import com.mokee.imagnet.presenter.process.ali.AliProcess
 import com.mokee.imagnet.presenter.process.btdb.BtdbProcess
 import com.mokee.imagnet.presenter.process.cilicat.*
@@ -47,6 +48,9 @@ class MessagePresenter {
             }
             RequestType.ALI -> {
                 AliProcess.processResponse(event.response)
+            }
+            RequestType.ALI_ITEM -> {
+                AliItemProcess.processResponse(event.response)
             }
             RequestType.BTDB -> {
                 BtdbProcess.processResponse(event.response)

@@ -48,3 +48,5 @@ data class CilicatSearchDetail(
 )
 
 data class CilicatRecentItem(val href: String, val text: String)
+
+data class AliItem(val title: String, val url: String, val attrs: ArrayList<String>) : Item()

@@ -12,6 +12,7 @@ enum class RequestType {
 
     NIMA_ITEM,
     CILICAT_ITEM,
+    ALI_ITEM,
 
     NIMA_DETAIL,
     CILICAT_DETAIL,
