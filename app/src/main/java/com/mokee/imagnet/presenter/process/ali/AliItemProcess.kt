@@ -31,6 +31,8 @@ object AliItemProcess : ProcessResponse(){
                 var href = ""
                 var title = ""
                 val attrs = arrayListOf<String>()
+                var magnetUrl = ""
+                var torrentUrl = ""
 
                 // Get title and href
                 val titles = item.getElementsByTag(ITEM_TITLE_TAG)
@@ -49,14 +51,18 @@ object AliItemProcess : ProcessResponse(){
                 if(attrsElements.size > 0) {
                     val spans = attrsElements[0].getElementsByTag(ITEM_ATTR_CLASS_TAG)
                     spans.forEach {
-                        attrs.add(it.text())
+                        when(it.text()) {
+                            "磁力链接" -> { magnetUrl = it.attr("href") }
+                            "下载BT种子" -> { torrentUrl = it.attr("href") }
+                            else -> { attrs.add(it.text()) }
+                        }
                     }
                 } else {
                     Timber.d("Ali item tails is empty.")
                 }
 
                 if(!TextUtils.isEmpty(href) && !TextUtils.isEmpty(title) && attrs.size > 0) {
-                    itemList.add(AliItem(title, href, attrs))
+                    itemList.add(AliItem(title, href, attrs, magnetUrl, torrentUrl))
                 } else {
                     Timber.d("Ali item all attr has one empty.")
                 }

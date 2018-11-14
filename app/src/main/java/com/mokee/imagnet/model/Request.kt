@@ -17,6 +17,7 @@ enum class RequestType {
     NIMA_DETAIL,
     CILICAT_DETAIL,
     CILICAT_SEARCH_DETAIL,
+    ALI_DETAIL,
 
     NIMA_SEARCH,
     CILICAT_SEARCH

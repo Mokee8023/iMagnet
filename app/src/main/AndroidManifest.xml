@@ -27,6 +27,7 @@
         <activity android:name=".activity.SearchActivity" />
         <activity android:name=".activity.cilicat.CilicatDetailActivity" />
         <activity android:name=".activity.cilicat.CilicatSearchDetailActivity" />
+        <activity android:name=".activity.ali.AliDetailActivity" />
     </application>
 
 </manifest>

@@ -49,4 +49,20 @@ data class CilicatSearchDetail(
 
 data class CilicatRecentItem(val href: String, val text: String)
 
-data class AliItem(val title: String, val url: String, val attrs: ArrayList<String>) : Item()
+data class AliItem(val title: String, val url: String, val attrs: ArrayList<String>, val magnetUrl: String, val torrentUrl: String) : Item()
+data class AliItemDetail(
+        val title: String,
+        val hash: String,
+        val fileCount: String,
+        val fileSize: String,
+        val acceptTime: String,
+        val hasDownload: String,
+        val downloadSpeed: String,
+        val recentDownload: String,
+        val magnet: String,
+        val fileList: ArrayList<AliFileList>
+)
+
+data class AliFileList(
+        val name: String,
+        val size: String) : Item()

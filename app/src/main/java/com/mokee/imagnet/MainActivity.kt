@@ -167,9 +167,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (!mSearchView.isIconified) {
-                mSearchView.isIconified = true
-                return true
+            mSearchView?.let {
+                if (!mSearchView.isIconified) {
+                    mSearchView.isIconified = true
+                    return true
+                }
             }
         }
         return super.onKeyDown(keyCode, event)

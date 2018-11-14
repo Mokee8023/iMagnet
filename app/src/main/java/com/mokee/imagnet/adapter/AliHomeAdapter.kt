@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.mokee.imagnet.R
+import com.mokee.imagnet.activity.ali.AliDetailActivity
 import com.mokee.imagnet.activity.cilicat.CilicatDetailActivity
 import com.mokee.imagnet.activity.nima.NimaDetailsActivity
 import com.mokee.imagnet.model.AliItem
@@ -46,9 +47,9 @@ class AliHomeAdapter : RecyclerView.Adapter<AliHomeAdapter.AliHolder> {
         holder.attrs.text = sb.substring(0, sb.lastIndex - 2).toString()
 
         holder.card.setOnClickListener {
-//            val aliDetail = Intent(mContext, CilicatDetailActivity::class.java)
-//            aliDetail.putExtra(CilicatDetailActivity.CILICAT_ITEM_DETAIL, mHomeItemList[position].url)
-//            mContext.startActivity(aliDetail)
+            val aliDetail = Intent(mContext, AliDetailActivity::class.java)
+            aliDetail.putExtra(AliDetailActivity.ALI_ITEM_DETAIL, mHomeItemList[position].url)
+            mContext.startActivity(aliDetail)
         }
     }
 
