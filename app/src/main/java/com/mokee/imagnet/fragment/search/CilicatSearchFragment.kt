@@ -51,7 +51,7 @@ class CilicatSearchFragment : Fragment() {
         mSearchText = arguments?.getString(SEARCH_EXTRA_TEXT)
         mSearchText?.let {
             mSearchUrl = MagnetConstrant.CILICAT_HOME_URL + "/search?word=" + URLEncoder.encode(it) + "&page=1"
-            NetworkPresenter.instance.getHtmlContent(
+            NetworkPresenter.instance?.getHtmlContent(
                     NetworkPresenter.NetworkItem(RequestType.CILICAT_SEARCH, mSearchUrl!!))
         }
     }
@@ -92,7 +92,7 @@ class CilicatSearchFragment : Fragment() {
     private fun loadData() {
         Timber.d("Now load cilicat search url: $mSearchUrl.")
         mSearchUrl?.let {
-            NetworkPresenter.instance.getHtmlContent(
+            NetworkPresenter.instance?.getHtmlContent(
                     NetworkPresenter.NetworkItem(RequestType.CILICAT_SEARCH, it))
         }?: Timber.e("Search url is null.")
     }
@@ -104,7 +104,7 @@ class CilicatSearchFragment : Fragment() {
                     it.length - 1, it.length, mCurrentSearchPage.toString())
             Timber.d("Now load cilicat search url: $moreSearchUrl.")
 
-            NetworkPresenter.instance.getHtmlContent(
+            NetworkPresenter.instance?.getHtmlContent(
                     NetworkPresenter.NetworkItem(RequestType.CILICAT_SEARCH, moreSearchUrl))
         }?: Timber.e("Search url is null.")
     }

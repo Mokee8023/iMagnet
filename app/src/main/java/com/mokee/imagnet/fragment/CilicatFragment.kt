@@ -84,7 +84,7 @@ class CilicatFragment : Fragment() {
 
     private fun loadData() {
         Timber.d("Now load cilicat home url: ${MagnetConstrant.CILICAT_HOME_URL}.")
-        NetworkPresenter.instance.getHtmlContent(
+        NetworkPresenter.instance?.getHtmlContent(
                 NetworkPresenter.NetworkItem(
                         RequestType.CILICAT, MagnetConstrant.CILICAT_HOME_URL))
     }

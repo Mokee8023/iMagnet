@@ -86,7 +86,7 @@ class AliFragment : Fragment() {
 
     private fun loadData() {
         Timber.d("Now load Ali home url: ${MagnetConstrant.ALICILI_HOME_URL}.")
-        NetworkPresenter.instance.getHtmlContent(
+        NetworkPresenter.instance?.getHtmlContent(
                 NetworkPresenter.NetworkItem(
                         RequestType.ALI, MagnetConstrant.ALICILI_HOME_URL))
     }

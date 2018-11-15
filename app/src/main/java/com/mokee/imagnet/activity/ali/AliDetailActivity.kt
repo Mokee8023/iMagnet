@@ -94,7 +94,7 @@ class AliDetailActivity: AppCompatActivity() {
     }
 
     private fun loadData() {
-        NetworkPresenter.instance.getHtmlContent(
+        NetworkPresenter.instance?.getHtmlContent(
                 NetworkPresenter.NetworkItem(RequestType.ALI_DETAIL, detailUrl))
     }
 

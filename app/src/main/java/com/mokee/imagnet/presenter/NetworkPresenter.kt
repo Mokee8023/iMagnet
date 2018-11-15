@@ -1,5 +1,7 @@
 package com.mokee.imagnet.presenter
 
+import android.annotation.SuppressLint
+import android.content.Context
 import com.mokee.imagnet.event.RequestFailEvent
 import com.mokee.imagnet.model.RequestType
 import com.mokee.imagnet.model.ResponseEvent
@@ -9,10 +11,14 @@ import timber.log.Timber
 import java.io.IOException
 import java.util.*
 import java.util.concurrent.TimeUnit
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache
+import com.franmontiel.persistentcookiejar.PersistentCookieJar
 
-class NetworkPresenter private constructor() {
+class NetworkPresenter private constructor(val context: Context) {
     private var mRequestQueue: LinkedList<NetworkItem>
     private lateinit var mOkhttpClient: OkHttpClient
+    private lateinit var cookieJar: PersistentCookieJar
 
     private var isRunning: Boolean = false
     private var mCurrentUrl: String? = null
@@ -24,9 +30,12 @@ class NetworkPresenter private constructor() {
     }
 
     private fun initOkhttp() {
+        cookieJar = PersistentCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(context))
+
         val clientBuilder = OkHttpClient.Builder()
         clientBuilder.connectTimeout(CONNECTION_TIMEOUT, TimeUnit.SECONDS)
         clientBuilder.readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+        clientBuilder.cookieJar(cookieJar)
         mOkhttpClient = clientBuilder.build()
     }
 
@@ -114,12 +123,23 @@ class NetworkPresenter private constructor() {
         return sb.toString()
     }
 
-    private object Holder {val INSTANCE = NetworkPresenter()}
     companion object {
         private const val CONNECTION_TIMEOUT = 20L
         private const val READ_TIMEOUT = 20L
 
-         val instance: NetworkPresenter by lazy { Holder.INSTANCE }
+        @SuppressLint("StaticFieldLeak")
+        var instance: NetworkPresenter? = null
+
+        fun init(context: Context): NetworkPresenter {
+            if (instance == null) {
+                synchronized(NetworkPresenter::class) {
+                    if (instance == null) {
+                        instance = NetworkPresenter(context)
+                    }
+                }
+            }
+            return instance!!
+        }
     }
 
     data class NetworkItem(val type: RequestType, val url: String)

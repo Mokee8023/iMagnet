@@ -64,7 +64,7 @@ class NiMaFragment : Fragment() {
 
     private fun loadData() {
         Timber.d("Now load nima home url: ${MagnetConstrant.NIMA_HOME_URL}.")
-        NetworkPresenter.instance.getHtmlContent(
+        NetworkPresenter.instance?.getHtmlContent(
                 NetworkPresenter.NetworkItem(
                         RequestType.NIMA, MagnetConstrant.NIMA_HOME_URL))
     }

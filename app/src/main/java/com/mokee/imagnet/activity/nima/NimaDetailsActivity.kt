@@ -60,7 +60,7 @@ class NimaDetailsActivity : AppCompatActivity(){
     }
 
     private fun loadData() {
-        NetworkPresenter.instance.getHtmlContent(
+        NetworkPresenter.instance?.getHtmlContent(
                 NetworkPresenter.NetworkItem(RequestType.NIMA_DETAIL, detailUrl))
     }
 

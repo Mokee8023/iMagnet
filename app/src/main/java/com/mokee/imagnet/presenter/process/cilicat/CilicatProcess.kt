@@ -43,7 +43,7 @@ object CilicatProcess : ProcessResponse() {
 
         if(homeItemList.size > 0) {
             homeItemList.forEach {
-                NetworkPresenter.instance.getHtmlContent(NetworkPresenter.NetworkItem(RequestType.CILICAT_ITEM, it.href))
+                NetworkPresenter.instance?.getHtmlContent(NetworkPresenter.NetworkItem(RequestType.CILICAT_ITEM, it.href))
             }
         }
     }

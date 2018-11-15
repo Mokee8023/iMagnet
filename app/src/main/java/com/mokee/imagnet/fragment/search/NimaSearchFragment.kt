@@ -50,7 +50,7 @@ class NimaSearchFragment : Fragment() {
         mSearchText = arguments?.getString(SEARCH_EXTRA_TEXT)
         mSearchText?.let {
             mSearchUrl = MagnetConstrant.NIMA_SEARCH_URL + URLEncoder.encode(it) + "-hot-desc-1"
-            NetworkPresenter.instance.getHtmlContent(
+            NetworkPresenter.instance?.getHtmlContent(
                     NetworkPresenter.NetworkItem(RequestType.NIMA_SEARCH, mSearchUrl!!))
         }
     }
@@ -91,7 +91,7 @@ class NimaSearchFragment : Fragment() {
     private fun loadData() {
         Timber.d("Now load nima search url: $mSearchUrl.")
         mSearchUrl?.let {
-            NetworkPresenter.instance.getHtmlContent(
+            NetworkPresenter.instance?.getHtmlContent(
                     NetworkPresenter.NetworkItem(RequestType.NIMA_SEARCH, it))
         }?: Timber.e("Search url is null.")
     }
@@ -103,7 +103,7 @@ class NimaSearchFragment : Fragment() {
                     it.length - 1, it.length, mCurrentSearchPage.toString())
             Timber.d("Now load nima search url: $moreSearchUrl.")
 
-            NetworkPresenter.instance.getHtmlContent(
+            NetworkPresenter.instance?.getHtmlContent(
                     NetworkPresenter.NetworkItem(RequestType.NIMA_SEARCH, moreSearchUrl))
         }?: Timber.e("Search url is null.")
     }

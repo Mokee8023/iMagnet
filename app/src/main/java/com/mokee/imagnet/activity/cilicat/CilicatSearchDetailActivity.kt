@@ -106,7 +106,7 @@ class CilicatSearchDetailActivity : AppCompatActivity() {
     }
 
     private fun loadData() {
-        NetworkPresenter.instance.getHtmlContent(
+        NetworkPresenter.instance?.getHtmlContent(
                 NetworkPresenter.NetworkItem(RequestType.CILICAT_SEARCH_DETAIL, detailUrl))
     }
 

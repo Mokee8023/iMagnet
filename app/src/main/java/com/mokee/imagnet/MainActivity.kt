@@ -20,6 +20,7 @@ import com.mokee.imagnet.fragment.CilicatFragment
 import com.mokee.imagnet.fragment.NiMaFragment
 import com.mokee.imagnet.model.ResponseEvent
 import com.mokee.imagnet.presenter.MessagePresenter
+import com.mokee.imagnet.presenter.NetworkPresenter
 import com.mokee.imagnet.utils.SoftKeyBoardListener
 import com.mokee.imagnet.utils.SoftKeyBoardListener.OnSoftKeyBoardChangeListener
 import kotlinx.android.synthetic.main.activity_main.*
@@ -112,6 +113,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun initPresenter() {
         mMessagePresenter = MessagePresenter()
+        NetworkPresenter.init(this)
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)

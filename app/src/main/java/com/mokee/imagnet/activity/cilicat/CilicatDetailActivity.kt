@@ -87,7 +87,7 @@ class CilicatDetailActivity: AppCompatActivity() {
     }
 
     private fun loadData() {
-        NetworkPresenter.instance.getHtmlContent(
+        NetworkPresenter.instance?.getHtmlContent(
                 NetworkPresenter.NetworkItem(RequestType.CILICAT_DETAIL, detailUrl))
     }
 
