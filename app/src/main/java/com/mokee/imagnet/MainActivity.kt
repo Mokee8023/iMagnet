@@ -105,6 +105,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun initViewPager() {
         main_magnet_pages.adapter = MagnetPagerAdapter(supportFragmentManager, tabArray, fragmentArray)
         main_magnet_pages.currentItem = FIRST_FRAGMENT_INDEX
+        main_magnet_pages.offscreenPageLimit = tabArray.size
 
         magnet_source.setupWithViewPager(main_magnet_pages)
     }

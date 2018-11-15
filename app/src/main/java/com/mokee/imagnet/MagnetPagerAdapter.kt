@@ -3,9 +3,13 @@ package com.mokee.imagnet
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import android.view.View
+import android.view.ViewGroup
+
+
 
 class MagnetPagerAdapter(
-        fm: FragmentManager,
+        private val fm: FragmentManager,
         private val tabs: List<String>,
         private val fragments: MutableList<Fragment>) : FragmentPagerAdapter(fm) {
 

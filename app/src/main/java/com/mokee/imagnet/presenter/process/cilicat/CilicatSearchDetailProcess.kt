@@ -22,7 +22,7 @@ object CilicatSearchDetailProcess : ProcessResponse() {
 
     private fun process(htmlContent: String) {
         val document = Jsoup.parse(htmlContent)
-        val magnetElements = document.getElementsByClass(ITEM_MAGNET_LINK)
+        val magnetElements = document.getElementsByAttributeValueStarting("class", ITEM_MAGNET_LINK)
         if(magnetElements.size > 0) {
             var title = ""
             val magnetHref = magnetElements[0].attr("href")
@@ -32,7 +32,7 @@ object CilicatSearchDetailProcess : ProcessResponse() {
             var receivedTime = ""
             var downloadSpeed = ""
 
-            val titleElement = document.getElementById(ITEM_TITLE_ID)
+            val titleElement = document.getElementsByAttributeValueStarting("id", ITEM_TITLE_ID)
             if(null != titleElement) {
                 title = titleElement.text()
             }
@@ -40,7 +40,7 @@ object CilicatSearchDetailProcess : ProcessResponse() {
             val fileList = arrayListOf<String>()
             val recentList = arrayListOf<CilicatRecentItem>()
 
-            val attrsElements = document.getElementsByClass(ITEM_DETAIL)
+            val attrsElements = document.getElementsByAttributeValueStarting("class", ITEM_DETAIL)
             if(attrsElements.size > 0) {
                 val attrs = attrsElements[0].getElementsByTag(ITEM_DETAIL_TAG)
                 (0 until attrs.size).forEach {
@@ -54,7 +54,7 @@ object CilicatSearchDetailProcess : ProcessResponse() {
                 }
             }
 
-            val fileListElements = document.getElementsByClass(ITEM_DETAIL_FILE_LIST_CLASS)
+            val fileListElements = document.getElementsByAttributeValueStarting("class", ITEM_DETAIL_FILE_LIST_CLASS)
             if(fileListElements.size > 0) {
                 val files = fileListElements[0].getElementsByTag(ITEM_DETAIL_FILE_LIST_TAG)
                 files.forEach {
@@ -62,7 +62,7 @@ object CilicatSearchDetailProcess : ProcessResponse() {
                 }
             }
 
-            val recentLists = document.getElementsByClass(ITEM_DETAIL_RECENT_FILE_LIST_CLASS)
+            val recentLists = document.getElementsByAttributeValueStarting("class", ITEM_DETAIL_RECENT_FILE_LIST_CLASS)
             if(recentLists.size > 0) {
                 val recentFiles = recentLists[0].getElementsByTag(ITEM_DETAIL_RECENT_FILE_LIST_TAG)
                 recentFiles.forEach {
@@ -102,15 +102,15 @@ object CilicatSearchDetailProcess : ProcessResponse() {
         }
     }
 
-    private const val ITEM_TITLE_ID = "Information__title___3V6H-"
+    private const val ITEM_TITLE_ID = "Information__title"
 
-    private const val ITEM_MAGNET_LINK = "Information__magnet___vubvz"
-    private const val ITEM_DETAIL = "Information__detail_information___1Mmca Information__content_information___1e4H7"
+    private const val ITEM_MAGNET_LINK = "Information__magnet"
+    private const val ITEM_DETAIL = "Information__detail_information"
     private const val ITEM_DETAIL_TAG = "b"
 
-    private const val ITEM_DETAIL_FILE_LIST_CLASS = "Information__files_information___2F0ig Information__content_information___1e4H7"
+    private const val ITEM_DETAIL_FILE_LIST_CLASS = "Information__files_information"
     private const val ITEM_DETAIL_FILE_LIST_TAG = "li"
 
-    private const val ITEM_DETAIL_RECENT_FILE_LIST_CLASS = "Information__recommend_infohash___IzZlA Information__content_information___1e4H7"
+    private const val ITEM_DETAIL_RECENT_FILE_LIST_CLASS = "Information__recommend_infohash"
     private const val ITEM_DETAIL_RECENT_FILE_LIST_TAG = "a"
 }

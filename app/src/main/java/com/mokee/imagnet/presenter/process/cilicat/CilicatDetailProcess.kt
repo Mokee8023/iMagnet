@@ -24,7 +24,7 @@ object CilicatDetailProcess : ProcessResponse() {
 
     private fun process(htmlContent: String) {
         val document = Jsoup.parse(htmlContent)
-        val contentElements = document.getElementsByClass(ITEM_DETAIL_CONTAINER_CLASS)
+        val contentElements = document.getElementsByAttributeValueStarting("class", ITEM_DETAIL_CONTAINER_CLASS)
         if (contentElements.size > 0) {
             var title = ""
             val attributes = arrayListOf<String>()
@@ -37,10 +37,10 @@ object CilicatDetailProcess : ProcessResponse() {
                 title = titleElements[0].text()
             }
 
-            val attributesElements = container.getElementsByClass(ITEM_DETAIL_CONTAINER_ATTRIBUTE_CLASS)
+            val attributesElements = container.getElementsByAttributeValueStarting("class", ITEM_DETAIL_CONTAINER_ATTRIBUTE_CLASS)
             if(attributesElements.size > 0) {
-                val leftElements = attributesElements[0].getElementsByClass(ITEM_DETAIL_CONTAINER_ATTRIBUTE_LEFT_CLASS)
-                val rightElements = attributesElements[0].getElementsByClass(ITEM_DETAIL_CONTAINER_ATTRIBUTE_RIGHT_CLASS)
+                val leftElements = attributesElements[0].getElementsByAttributeValueStarting("class", ITEM_DETAIL_CONTAINER_ATTRIBUTE_LEFT_CLASS)
+                val rightElements = attributesElements[0].getElementsByAttributeValueStarting("class", ITEM_DETAIL_CONTAINER_ATTRIBUTE_RIGHT_CLASS)
 
                 if(leftElements.size > 0) {
                     val leftDetailElements = leftElements[0].getElementsByTag(ITEM_DETAIL_CONTAINER_ATTRIBUTE_TAG)
@@ -62,7 +62,7 @@ object CilicatDetailProcess : ProcessResponse() {
 
             }
 
-            val detailElements = container.getElementsByClass(ITEM_DETAIL_CONTAINER_DETAILS_CLASS)
+            val detailElements = container.getElementsByAttributeValueStarting("class", ITEM_DETAIL_CONTAINER_DETAILS_CLASS)
             if(detailElements.size > 0) {
                 detail = detailElements[0].text()
             }
@@ -159,19 +159,14 @@ object CilicatDetailProcess : ProcessResponse() {
         return fileList
     }
 
-    private const val ITEM_DETAIL_CONTAINER_CLASS = "BaikeCommon__summary_content___1XNU1"
+    private const val ITEM_DETAIL_CONTAINER_CLASS = "BaikeCommon__summary_content"
     private const val ITEM_DETAIL_TITLE_TAG = "h1"
-    private const val ITEM_DETAIL_CONTAINER_ATTRIBUTE_CLASS = "BaikeCommon__basic_info___1AP4H"
-    private const val ITEM_DETAIL_CONTAINER_ATTRIBUTE_LEFT_CLASS = "BaikeCommon__basic_info_left___Gu5JP"
-    private const val ITEM_DETAIL_CONTAINER_ATTRIBUTE_RIGHT_CLASS = "BaikeCommon__basic_info_right___23t8H"
-    private const val ITEM_DETAIL_CONTAINER_DETAILS_CLASS = "BaikeCommon__summary___1SPO3"
+    private const val ITEM_DETAIL_CONTAINER_ATTRIBUTE_CLASS = "BaikeCommon__basic_info"
+    private const val ITEM_DETAIL_CONTAINER_ATTRIBUTE_LEFT_CLASS = "BaikeCommon__basic_info_left"
+    private const val ITEM_DETAIL_CONTAINER_ATTRIBUTE_RIGHT_CLASS = "BaikeCommon__basic_info_right"
+    private const val ITEM_DETAIL_CONTAINER_DETAILS_CLASS = "BaikeCommon__summary"
 
     private const val ITEM_DETAIL_CONTAINER_ATTRIBUTE_TAG = "div"
-
-    private const val ITEM_DETAIL_MAGNET_LIST_ID = "MovieResources__self_sources_list___34aby"
-    private const val ITEM_DETAIL_MAGNET_LIST_ID_TR_TAG = "tr"
-    private const val ITEM_DETAIL_MAGNET_LIST_ID_TD_TAG = "td"
-    private const val ITEM_DETAIL_MAGNET_LIST_ID_A_TAG = "a"
 
     private const val HEAD_DATA_TAG = "script"
 }

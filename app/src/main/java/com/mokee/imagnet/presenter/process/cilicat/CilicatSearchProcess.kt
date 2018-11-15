@@ -23,7 +23,7 @@ object CilicatSearchProcess : ProcessResponse() {
 
     private fun process(htmlContent: String) {
         val document = Jsoup.parse(htmlContent)
-        val tableElements = document.getElementsByClass(ITEM_TABLE_CALSS_NAME)
+        val tableElements = document.getElementsByAttributeValueStarting("class", ITEM_TABLE_CALSS_NAME)
         tableElements.forEach { table ->
             var title = ""
             var href = ""
@@ -31,7 +31,7 @@ object CilicatSearchProcess : ProcessResponse() {
             var fileCount = "未知"
             var createTime = "未知"
 
-            val titleClass = table.getElementsByClass(ITEM_TITLE_CLASS_NAME)
+            val titleClass = table.getElementsByAttributeValueStarting("class", ITEM_TITLE_CLASS_NAME)
             if(titleClass.size > 0) {
                 title = titleClass[0].text()
                 href = titleClass[0].attr("href")
@@ -40,7 +40,7 @@ object CilicatSearchProcess : ProcessResponse() {
                 }
             }
 
-            val attrClass = table.getElementsByClass(ITEM_ATTR_CLASS_NAME)
+            val attrClass = table.getElementsByAttributeValueStarting("class", ITEM_ATTR_CLASS_NAME)
             if(attrClass.size > 0) {
                 attrClass[0].textNodes().forEach {
                     val text = it.text()
@@ -64,7 +64,7 @@ object CilicatSearchProcess : ProcessResponse() {
         }
     }
 
-    private const val ITEM_TABLE_CALSS_NAME = "Search__result___2S94i"
-    private const val ITEM_TITLE_CLASS_NAME = "Search__result_title___24kb_"
-    private const val ITEM_ATTR_CLASS_NAME = "Search__result_information___1qNVg"
+    private const val ITEM_TABLE_CALSS_NAME = "Search__result"
+    private const val ITEM_TITLE_CLASS_NAME = "Search__result_title"
+    private const val ITEM_ATTR_CLASS_NAME = "Search__result_information"
 }

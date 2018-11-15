@@ -8,10 +8,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.github.ybq.android.spinkit.SpinKitView
 import com.mokee.imagnet.R
 import com.mokee.imagnet.adapter.CilicatHomeAdapter
 import com.mokee.imagnet.constrant.MagnetConstrant
+import com.mokee.imagnet.event.AnalysisFailEvent
 import com.mokee.imagnet.event.CilicatHomeItemEvent
 import com.mokee.imagnet.event.RequestFailEvent
 import com.mokee.imagnet.model.RequestType
@@ -108,6 +110,15 @@ class CilicatFragment : Fragment() {
         mSmartRefreshLayout.finishRefresh(false)
         mSmartRefreshLayout.finishLoadMore(false)
         mSpinKitView.visibility = View.GONE
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public fun onContentFail(event: AnalysisFailEvent) {
+        mSmartRefreshLayout.finishRefresh(false)
+        mSmartRefreshLayout.finishLoadMore(false)
+        mSpinKitView.visibility = View.GONE
+
+        Toast.makeText(this.context, event.reason, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDetach() {

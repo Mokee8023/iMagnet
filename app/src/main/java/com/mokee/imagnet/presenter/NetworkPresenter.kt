@@ -62,10 +62,10 @@ class NetworkPresenter private constructor() {
 
         val requestBuilder = Request.Builder()
         requestBuilder.get().url(item.url)
-        val ua = getUserAgent()
-        if(ua.isNotEmpty()) {
-            requestBuilder.removeHeader("User-Agent").addHeader("User-Agent", getUserAgent())
-        }
+//        val ua = getUserAgent()
+//        if(ua.isNotEmpty()) {
+//            requestBuilder.removeHeader("User-Agent").addHeader("User-Agent", getUserAgent())
+//        }
 
         val resultCall = mOkhttpClient.newCall(requestBuilder.build())
 

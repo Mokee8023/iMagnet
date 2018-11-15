@@ -25,14 +25,14 @@ object CilicatItemProcess : ProcessResponse(){
 
     private fun process(htmlContent: String) {
         val document = Jsoup.parse(htmlContent)
-        val cardElement = document.getElementById(ITEM_CARD_ID)
-        if(null != cardElement) {
+        val cardElement = document.getElementsByAttributeValueStarting("id", ITEM_CARD_ID)
+        if(null != cardElement && cardElement.size > 0) {
             var title = ""
             var href = ""
             var imageUrl = ""
-            var detailArray = arrayListOf<String>()
+            val detailArray = arrayListOf<String>()
 
-            val titleElements = cardElement.getElementsByClass(ITEM_TITLE_CLASS_NAME)
+            val titleElements = cardElement[0].getElementsByAttributeValueStarting("class", ITEM_TITLE_CLASS_NAME)
             if(titleElements.size > 0) {
                 val text = titleElements[0].text()
                 href = titleElements[0].attr("href")
@@ -42,9 +42,9 @@ object CilicatItemProcess : ProcessResponse(){
                 title = text.substring(0, text.lastIndexOf("_"))
             }
 
-            val cardDetailElements = cardElement.getElementsByClass(ITEM_CARD_DETAIL_CLASS_NAME)
+            val cardDetailElements = cardElement[0].getElementsByAttributeValueStarting("class", ITEM_CARD_DETAIL_CLASS_NAME)
             if(cardDetailElements.size > 0) {
-                val imageElements = cardDetailElements[0].getElementsByClass(ITEM_CARD_DETAIL_IMAGE_CLASS_NAME)
+                val imageElements = cardDetailElements[0].getElementsByAttributeValueStarting("class", ITEM_CARD_DETAIL_IMAGE_CLASS_NAME)
                 if(imageElements.size > 0) {
                     val img = imageElements[0].getElementsByTag(ITEM_CARD_DETAIL_IMAGE_TAG)
                     if(img.size > 0) {
@@ -55,7 +55,7 @@ object CilicatItemProcess : ProcessResponse(){
                     }
                 }
 
-                val detailElements = cardDetailElements[0].getElementsByClass(ITEM_CARD_DETAIL_DETAIL_CLASS_NAME)
+                val detailElements = cardDetailElements[0].getElementsByAttributeValueStarting("class", ITEM_CARD_DETAIL_DETAIL_CLASS_NAME)
                 if(detailElements.size > 0) {
                     val details = detailElements[0].getElementsByTag(ITEM_CARD_DETAIL_DETAIL_TAG)
                     if(details.size > 0) {
@@ -75,11 +75,11 @@ object CilicatItemProcess : ProcessResponse(){
         }
     }
 
-    private const val ITEM_CARD_ID = "MovieCard__work_card___1KPa5"
-    private const val ITEM_TITLE_CLASS_NAME = "MovieCard__title___2Xq-9"
-    private const val ITEM_CARD_DETAIL_CLASS_NAME = "MovieCard__wrapper___RVwGa"
-    private const val ITEM_CARD_DETAIL_IMAGE_CLASS_NAME = "MovieCard__cover___3LCD7"
-    private const val ITEM_CARD_DETAIL_DETAIL_CLASS_NAME = "MovieCard__content___3kv1W"
+    private const val ITEM_CARD_ID = "MovieCard__work_card"
+    private const val ITEM_TITLE_CLASS_NAME = "MovieCard__title"
+    private const val ITEM_CARD_DETAIL_CLASS_NAME = "MovieCard__wrapper"
+    private const val ITEM_CARD_DETAIL_IMAGE_CLASS_NAME = "MovieCard__cover"
+    private const val ITEM_CARD_DETAIL_DETAIL_CLASS_NAME = "MovieCard__content"
 
     private const val ITEM_CARD_DETAIL_IMAGE_TAG = "img"
     private const val ITEM_CARD_DETAIL_DETAIL_TAG = "div"

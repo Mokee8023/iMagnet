@@ -1,11 +1,13 @@
 package com.mokee.imagnet.presenter.process.cilicat
 
 import com.mokee.imagnet.constrant.MagnetConstrant
+import com.mokee.imagnet.event.AnalysisFailEvent
 import com.mokee.imagnet.model.RequestType
 import com.mokee.imagnet.model.CilicatHomeItem
 import com.mokee.imagnet.presenter.NetworkPresenter
 import com.mokee.imagnet.presenter.process.ProcessResponse
 import okhttp3.Response
+import org.greenrobot.eventbus.EventBus
 import org.jsoup.Jsoup
 import timber.log.Timber
 
@@ -21,7 +23,7 @@ object CilicatProcess : ProcessResponse() {
         val homeItemList = arrayListOf<CilicatHomeItem>()
 
         val document = Jsoup.parse(htmlContent)
-        val hotElements = document.getElementsByClass(HOME_DIV_CLASS_NAME)
+        val hotElements = document.getElementsByAttributeValueStarting("class", HOME_DIV_CLASS_NAME)
         if(hotElements.size > 0) {
             val element = hotElements[0]
             val aTags = element.getElementsByTag(HOME_DIV_HOT_TAG_NAME)
@@ -35,7 +37,8 @@ object CilicatProcess : ProcessResponse() {
                 homeItemList.add(CilicatHomeItem(href, name))
             }
         } else {
-            Timber.e("Can't get body class from nima response.")
+            Timber.e("Can't get body class from cilicat response.")
+            EventBus.getDefault().post(AnalysisFailEvent("Can't analysis Cilicat html content."))
         }
 
         if(homeItemList.size > 0) {
@@ -45,6 +48,6 @@ object CilicatProcess : ProcessResponse() {
         }
     }
 
-    private const val HOME_DIV_CLASS_NAME = "Home__search_hot_words___1PqHJ"
+    private const val HOME_DIV_CLASS_NAME = "Home__search_hot_words"
     private const val HOME_DIV_HOT_TAG_NAME = "a"
 }
