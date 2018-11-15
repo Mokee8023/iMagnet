@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import com.mokee.imagnet.R
 import com.mokee.imagnet.activity.cilicat.CilicatDetailActivity
@@ -55,11 +56,20 @@ class CilicatSearchAdapter : RecyclerView.Adapter<CilicatSearchAdapter.CilicatSe
                 mContext.startActivity(urlIntent)
             }
         }
+
+        holder.type.apply {
+            if(mItemList[position].url.contains(MagnetConstrant.CILICAT_HOME_URL)) {
+                this.setImageResource(R.drawable.magnet_icon)
+            } else {
+                this.setImageResource(R.drawable.baidu_yun)
+            }
+        }
     }
 
     class CilicatSearchHolder(view: View) : RecyclerView.ViewHolder(view) {
         var card: CardView = view.findViewById(R.id.cilicat_search_card)
         var title: TextView = view.findViewById(R.id.cilicat_search_title)
         var attrs: TextView = view.findViewById(R.id.cilicat_search_attribute)
+        var type: ImageButton = view.findViewById(R.id.cilicat_search_type)
     }
 }
