@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
+import java.io.File
 
 class NetworkPresenter private constructor(val context: Context) {
     private var mRequestQueue: LinkedList<NetworkItem>
@@ -30,12 +31,15 @@ class NetworkPresenter private constructor(val context: Context) {
     }
 
     private fun initOkhttp() {
+        val cache = Cache(File(context.externalCacheDir.toString(),"iMagnetCache"), 10 * 1024 * 1024L)
         cookieJar = PersistentCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(context))
 
         val clientBuilder = OkHttpClient.Builder()
         clientBuilder.connectTimeout(CONNECTION_TIMEOUT, TimeUnit.SECONDS)
         clientBuilder.readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
         clientBuilder.cookieJar(cookieJar)
+        clientBuilder.cache(cache)
+
         mOkhttpClient = clientBuilder.build()
     }
 
@@ -69,8 +73,10 @@ class NetworkPresenter private constructor(val context: Context) {
         mCurrentType = item.type
         Timber.d("Execute get url content: ${item.url}")
 
+//        val cacheControl = CacheControl.Builder().maxAge(30, TimeUnit.SECONDS).build()
+
         val requestBuilder = Request.Builder()
-        requestBuilder.get().url(item.url)
+        requestBuilder.get().url(item.url)/**.cacheControl(cacheControl)*/
 //        val ua = getUserAgent()
 //        if(ua.isNotEmpty()) {
 //            requestBuilder.removeHeader("User-Agent").addHeader("User-Agent", getUserAgent())

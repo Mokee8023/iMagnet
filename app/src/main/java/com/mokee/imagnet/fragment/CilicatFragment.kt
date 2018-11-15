@@ -78,7 +78,7 @@ class CilicatFragment : Fragment() {
         }
         mSmartRefreshLayout.setOnLoadMoreListener {
             loadData()
-            it.finishLoadMore(REFRESH_DEFAULT_TIME * 1000, false, false)
+            it.finishLoadMore(REFRESH_DEFAULT_TIME * 1000, false, true)
         }
     }
 
