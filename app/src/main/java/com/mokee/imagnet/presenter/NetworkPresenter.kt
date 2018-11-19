@@ -15,19 +15,20 @@ import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersisto
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import java.io.File
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 class NetworkPresenter private constructor(val context: Context) {
     private var mRequestQueue: LinkedList<NetworkItem>
     private lateinit var mOkhttpClient: OkHttpClient
     private lateinit var cookieJar: PersistentCookieJar
 
-    private var isRunning: Boolean = false
-    private var mCurrentUrl: String? = null
-    private var mCurrentType: RequestType? = null
+    private val executors: ExecutorService
 
     init {
         initOkhttp()
         mRequestQueue = LinkedList()
+        executors = Executors.newFixedThreadPool(FIX_THREAD_POOL_SIZE)
     }
 
     private fun initOkhttp() {
@@ -45,22 +46,12 @@ class NetworkPresenter private constructor(val context: Context) {
 
     fun getHtmlContent(item: NetworkItem) {
         Timber.d("received request by url: ${item.url}")
-        mRequestQueue.add(item)
-        next()
+        next(item)
     }
 
-    /**
-     * Execute next http request
-     */
-    private fun next() {
-        if(mRequestQueue.isNotEmpty()) {
-            if(!isRunning) {
-                getContent(mRequestQueue.remove())
-            } else {
-                Timber.d("Okhttp is now getting content, please waiting.")
-            }
-        } else {
-            Timber.d("Request queue is empty, nothing to get.")
+    private fun next(item: NetworkItem) {
+        executors.execute {
+            getContent(item)
         }
     }
 
@@ -68,9 +59,8 @@ class NetworkPresenter private constructor(val context: Context) {
      * Get html content
      */
     private fun getContent(item: NetworkItem) {
-        isRunning = true
-        mCurrentUrl = item.url
-        mCurrentType = item.type
+        val mCurrentUrl = item.url
+        val mCurrentType = item.type
         Timber.d("Execute get url content: ${item.url}")
 
 //        val cacheControl = CacheControl.Builder().maxAge(30, TimeUnit.SECONDS).build()
@@ -86,20 +76,14 @@ class NetworkPresenter private constructor(val context: Context) {
 
         resultCall.enqueue(object : Callback {
             override fun onResponse(call: Call, response: Response) {
-                EventBus.getDefault().post(ResponseEvent(mCurrentType!!, response))
-                Timber.d("Get content completed, response.headers: %s , response.body:%s.",
+                EventBus.getDefault().post(ResponseEvent(mCurrentType, response))
+                Timber.d("Get $mCurrentUrl content completed, response.headers: %s , response.body:%s.",
                         response.headers(), response.body())
-
-                isRunning = false
-                next()
             }
 
             override fun onFailure(call: Call, exception: IOException) {
                 EventBus.getDefault().post(RequestFailEvent(call.request().url().toString(), exception))
-                Timber.d("Get content fail, exception: $exception.")
-
-                isRunning = false
-                next()
+                Timber.d("Get $mCurrentUrl content fail, exception: $exception.")
             }
         })
     }
@@ -132,6 +116,8 @@ class NetworkPresenter private constructor(val context: Context) {
     companion object {
         private const val CONNECTION_TIMEOUT = 20L
         private const val READ_TIMEOUT = 20L
+
+        private var FIX_THREAD_POOL_SIZE = Runtime.getRuntime().availableProcessors() * 2 + 1
 
         @SuppressLint("StaticFieldLeak")
         var instance: NetworkPresenter? = null
