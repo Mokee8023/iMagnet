@@ -76,7 +76,7 @@ object AliDetailProcess : ProcessResponse() {
 
                         val names = it.getElementsByClass(ITEM_DETAIL_CONTAINER_DETAIL_FILE_LIST_FILE_NAME_CLASS)
                         if(names.size > 0) {
-                            name = names[0].text()
+                            name = names[0].text().trim()
                         }
 
                         val sizes = it.getElementsByClass(ITEM_DETAIL_CONTAINER_DETAIL_FILE_LIST_SIZE_CLASS)

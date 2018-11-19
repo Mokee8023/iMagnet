@@ -7,6 +7,8 @@ import com.mokee.imagnet.model.RequestType
 import com.mokee.imagnet.model.ResponseEvent
 import com.mokee.imagnet.presenter.process.ali.AliItemProcess
 import com.mokee.imagnet.presenter.process.ali.AliProcess
+import com.mokee.imagnet.presenter.process.btdb.BtdbDetailProcess
+import com.mokee.imagnet.presenter.process.btdb.BtdbMeItemProcess
 import com.mokee.imagnet.presenter.process.btdb.BtdbProcess
 import com.mokee.imagnet.presenter.process.cilicat.*
 import com.mokee.imagnet.presenter.process.nima.NimaDetailProcess
@@ -52,8 +54,14 @@ class MessagePresenter {
             RequestType.ALI_ITEM -> {
                 AliItemProcess.processResponse(event.response)
             }
-            RequestType.BTDB -> {
+            RequestType.BTDB_ME -> {
                 BtdbProcess.processResponse(event.response)
+            }
+            RequestType.BTDB_ME_ITEM -> {
+                BtdbMeItemProcess.processResponse(event.response)
+            }
+            RequestType.BTDB_ME_DETAIL -> {
+                BtdbDetailProcess.processResponse(event.response)
             }
             else -> {
             }

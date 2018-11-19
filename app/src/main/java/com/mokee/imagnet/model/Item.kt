@@ -66,3 +66,22 @@ data class AliItemDetail(
 data class AliFileList(
         val name: String,
         val size: String) : Item()
+
+data class BtdbMeItem(
+        val title: String,
+        val url: String,
+        val size: String,
+        val fileCount: String,
+        val createTime: String,
+        val hot: String) : Item()
+
+data class BtdbMeDetailItem(
+        val title: String,
+        val attributes: ArrayList<String>,
+        val magnet: String,
+        val thunder: String,
+        val fileList: ArrayList<BtdbMeDetailFile>) : Item()
+
+data class BtdbMeDetailFile(
+        val name: String,
+        val size: String) : Item()

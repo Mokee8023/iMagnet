@@ -16,6 +16,7 @@ import android.widget.Toast
 import com.mokee.imagnet.activity.SearchActivity
 import com.mokee.imagnet.event.RequestFailEvent
 import com.mokee.imagnet.fragment.AliFragment
+import com.mokee.imagnet.fragment.BtdbFragment
 import com.mokee.imagnet.fragment.CilicatFragment
 import com.mokee.imagnet.fragment.NiMaFragment
 import com.mokee.imagnet.model.ResponseEvent
@@ -73,7 +74,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         fragmentArray.add(NiMaFragment())
         fragmentArray.add(CilicatFragment())
         fragmentArray.add(AliFragment())
-//        fragmentArray.add(BtdbFragment())
+        fragmentArray.add(BtdbFragment())
     }
 
     /** Init bar */
