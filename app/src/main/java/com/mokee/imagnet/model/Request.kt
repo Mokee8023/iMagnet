@@ -22,5 +22,6 @@ enum class RequestType {
     BTDB_ME_DETAIL,
 
     NIMA_SEARCH,
-    CILICAT_SEARCH
+    CILICAT_SEARCH,
+    BTDB_ME_SEARCH
 }

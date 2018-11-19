@@ -1,7 +1,6 @@
 package com.mokee.imagnet.presenter.process.ali
 
-import com.mokee.imagnet.event.AnalysisFailEvent
-import com.mokee.imagnet.event.RequestFailEvent
+import com.mokee.imagnet.event.AliFailEvent
 import com.mokee.imagnet.model.AliHomeItem
 import com.mokee.imagnet.model.RequestType
 import com.mokee.imagnet.presenter.NetworkPresenter
@@ -40,7 +39,7 @@ object AliProcess : ProcessResponse() {
             }
         } else {
             Timber.e("Can't get body class from ali response.")
-            EventBus.getDefault().post(AnalysisFailEvent("Can't analysis ali html content."))
+            EventBus.getDefault().post(AliFailEvent("Can't analysis ali html content."))
         }
 
         if(homeItemList.size > 0) {

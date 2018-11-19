@@ -1,9 +1,8 @@
 package com.mokee.imagnet.presenter.process.btdb
 
 import com.mokee.imagnet.constrant.MagnetConstrant
-import com.mokee.imagnet.event.AnalysisFailEvent
+import com.mokee.imagnet.event.BtdbFailEvent
 import com.mokee.imagnet.model.BtdbMeHomeItem
-import com.mokee.imagnet.model.CilicatHomeItem
 import com.mokee.imagnet.model.RequestType
 import com.mokee.imagnet.presenter.NetworkPresenter
 import com.mokee.imagnet.presenter.process.ProcessResponse
@@ -39,7 +38,7 @@ object BtdbProcess : ProcessResponse() {
             }
         } else {
             Timber.e("Can't get body class from btdb me response.")
-            EventBus.getDefault().post(AnalysisFailEvent("Can't analysis btdb me html content."))
+            EventBus.getDefault().post(BtdbFailEvent("Can't analysis btdb me html content."))
         }
 
         if(homeItemList.size > 0) {

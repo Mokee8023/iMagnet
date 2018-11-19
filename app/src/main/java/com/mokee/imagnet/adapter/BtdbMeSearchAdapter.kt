@@ -19,7 +19,7 @@ import com.mokee.imagnet.model.BtdbMeItem
 import com.mokee.imagnet.model.CilicatItem
 import java.lang.StringBuilder
 
-class BtdbMeHomeAdapter : RecyclerView.Adapter<BtdbMeHomeAdapter.BtdbMeHolder> {
+class BtdbMeSearchAdapter : RecyclerView.Adapter<BtdbMeSearchAdapter.BtdbMeHolder> {
     private var mContext: Context
     private var mHomeItemList: MutableList<BtdbMeItem>
 

@@ -13,8 +13,8 @@ import com.github.ybq.android.spinkit.SpinKitView
 import com.mokee.imagnet.R
 import com.mokee.imagnet.adapter.AliHomeAdapter
 import com.mokee.imagnet.constrant.MagnetConstrant
+import com.mokee.imagnet.event.AliFailEvent
 import com.mokee.imagnet.event.AliHomeItemEvent
-import com.mokee.imagnet.event.AnalysisFailEvent
 import com.mokee.imagnet.event.RequestFailEvent
 import com.mokee.imagnet.model.AliItem
 import com.mokee.imagnet.model.RequestType
@@ -115,7 +115,7 @@ class AliFragment : Fragment() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public fun onContentFail(event: AnalysisFailEvent) {
+    public fun onContentFail(event: AliFailEvent) {
         mSmartRefreshLayout.finishRefresh(false)
         mSmartRefreshLayout.finishLoadMore(false)
         mSpinKitView.visibility = View.GONE

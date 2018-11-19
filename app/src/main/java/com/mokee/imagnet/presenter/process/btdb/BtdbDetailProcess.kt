@@ -21,7 +21,7 @@ object BtdbDetailProcess : ProcessResponse() {
         val responseBody = response.body()
         responseBody?.let {
             BtdbDetailProcess.process(it.string())
-        }?: Timber.e("Cilicat details response body is null or empty.")
+        }?: Timber.e("Btdb me details response body is null or empty.")
     }
 
     private fun process(htmlContent: String) {
@@ -56,7 +56,7 @@ object BtdbDetailProcess : ProcessResponse() {
                         } else if(attrIndex == 6) {
                             val ms = attrsElements[attrIndex].getElementsByTag("a")
                             if(ms.size > 0) {
-                                magnet = ms[0].attr("href")
+                                thunder = ms[0].attr("href")
                             }
                         }
                     }

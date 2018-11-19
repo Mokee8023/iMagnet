@@ -10,6 +10,7 @@ import com.mokee.imagnet.presenter.process.ali.AliProcess
 import com.mokee.imagnet.presenter.process.btdb.BtdbDetailProcess
 import com.mokee.imagnet.presenter.process.btdb.BtdbMeItemProcess
 import com.mokee.imagnet.presenter.process.btdb.BtdbProcess
+import com.mokee.imagnet.presenter.process.btdb.BtdbSearchProcess
 import com.mokee.imagnet.presenter.process.cilicat.*
 import com.mokee.imagnet.presenter.process.nima.NimaDetailProcess
 import com.mokee.imagnet.presenter.process.nima.NimaItemProcess
@@ -62,6 +63,9 @@ class MessagePresenter {
             }
             RequestType.BTDB_ME_DETAIL -> {
                 BtdbDetailProcess.processResponse(event.response)
+            }
+            RequestType.BTDB_ME_SEARCH -> {
+                BtdbSearchProcess.processResponse(event.response)
             }
             else -> {
             }

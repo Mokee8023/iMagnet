@@ -12,13 +12,11 @@ import android.widget.Toast
 import com.github.ybq.android.spinkit.SpinKitView
 import com.mokee.imagnet.R
 import com.mokee.imagnet.adapter.BtdbMeHomeAdapter
-import com.mokee.imagnet.adapter.CilicatHomeAdapter
 import com.mokee.imagnet.constrant.MagnetConstrant
-import com.mokee.imagnet.event.AnalysisFailEvent
+import com.mokee.imagnet.event.BtdbFailEvent
 import com.mokee.imagnet.event.BtdbMeHomeItemEvent
 import com.mokee.imagnet.event.RequestFailEvent
 import com.mokee.imagnet.model.BtdbMeItem
-import com.mokee.imagnet.model.CilicatItem
 import com.mokee.imagnet.model.RequestType
 import com.mokee.imagnet.presenter.NetworkPresenter
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -116,7 +114,7 @@ class BtdbFragment : Fragment() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public fun onContentFail(event: AnalysisFailEvent) {
+    public fun onContentFail(event: BtdbFailEvent) {
         mSmartRefreshLayout.finishRefresh(false)
         mSmartRefreshLayout.finishLoadMore(false)
         mSpinKitView.visibility = View.GONE

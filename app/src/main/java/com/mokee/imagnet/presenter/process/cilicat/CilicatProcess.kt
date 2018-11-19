@@ -1,7 +1,7 @@
 package com.mokee.imagnet.presenter.process.cilicat
 
 import com.mokee.imagnet.constrant.MagnetConstrant
-import com.mokee.imagnet.event.AnalysisFailEvent
+import com.mokee.imagnet.event.CilicatFailEvent
 import com.mokee.imagnet.model.RequestType
 import com.mokee.imagnet.model.CilicatHomeItem
 import com.mokee.imagnet.presenter.NetworkPresenter
@@ -38,7 +38,7 @@ object CilicatProcess : ProcessResponse() {
             }
         } else {
             Timber.e("Can't get body class from cilicat response.")
-            EventBus.getDefault().post(AnalysisFailEvent("Can't analysis Cilicat html content."))
+            EventBus.getDefault().post(CilicatFailEvent("Can't analysis Cilicat html content."))
         }
 
         if(homeItemList.size > 0) {

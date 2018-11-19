@@ -15,6 +15,7 @@ import com.mokee.imagnet.event.NimaSearchEvent
 import com.mokee.imagnet.event.RequestFailEvent
 import com.mokee.imagnet.fragment.CilicatFragment
 import com.mokee.imagnet.fragment.NiMaFragment
+import com.mokee.imagnet.fragment.search.BtdbMeSearchFragment
 import com.mokee.imagnet.fragment.search.CilicatSearchFragment
 import com.mokee.imagnet.fragment.search.NimaSearchFragment
 import com.mokee.imagnet.model.NimaItem
@@ -55,6 +56,7 @@ class SearchActivity : AppCompatActivity() {
         // new fragments
         fragmentArray.add(NimaSearchFragment.newInstance(mSearchText))
         fragmentArray.add(CilicatSearchFragment.newInstance(mSearchText))
+        fragmentArray.add(BtdbMeSearchFragment.newInstance(mSearchText))
     }
 
     /** Init view pager */

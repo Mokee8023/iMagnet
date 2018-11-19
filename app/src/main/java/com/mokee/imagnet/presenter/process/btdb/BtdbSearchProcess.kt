@@ -2,8 +2,8 @@ package com.mokee.imagnet.presenter.process.btdb
 
 import android.text.TextUtils
 import com.mokee.imagnet.constrant.MagnetConstrant
-import com.mokee.imagnet.event.BtdbFailEvent
-import com.mokee.imagnet.event.BtdbMeHomeItemEvent
+import com.mokee.imagnet.event.BtdbMeSearchEvent
+import com.mokee.imagnet.event.BtdbSearchFailEvent
 import com.mokee.imagnet.model.BtdbMeItem
 import com.mokee.imagnet.presenter.process.ProcessResponse
 import okhttp3.Response
@@ -11,7 +11,7 @@ import org.greenrobot.eventbus.EventBus
 import org.jsoup.Jsoup
 import timber.log.Timber
 
-object BtdbMeItemProcess : ProcessResponse(){
+object BtdbSearchProcess : ProcessResponse(){
     override fun processResponse(response: Response) {
         val responseBody = response.body()
         responseBody?.let {
@@ -20,8 +20,6 @@ object BtdbMeItemProcess : ProcessResponse(){
     }
 
     private fun process(htmlContent: String) {
-        val searchList = arrayListOf<BtdbMeItem>()
-
         val document = Jsoup.parse(htmlContent)
         val listElements = document.getElementsByClass(ITEM_LIST_CLASS)
         if(null != listElements && listElements.size > 0) {
@@ -63,16 +61,14 @@ object BtdbMeItemProcess : ProcessResponse(){
                         !TextUtils.isEmpty(fileCount) &&
                         !TextUtils.isEmpty(createTime) &&
                         !TextUtils.isEmpty(hot)) {
-                    searchList.add(BtdbMeItem(title, href, size, fileCount, createTime, hot))
+                    EventBus.getDefault().post(
+                            BtdbMeSearchEvent(
+                                    BtdbMeItem(title, href, size, fileCount, createTime, hot)))
                 }
-            }
-
-            if(searchList.size > 0) {
-                EventBus.getDefault().post(BtdbMeHomeItemEvent(searchList[0]))
             }
         } else {
             Timber.e("Can't get body class from btdb me response.")
-            EventBus.getDefault().post(BtdbFailEvent("Can't analysis btdb me html content."))
+            EventBus.getDefault().post(BtdbSearchFailEvent("Can't analysis btdb me html content."))
         }
     }
 

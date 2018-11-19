@@ -1,6 +1,5 @@
 package com.mokee.imagnet.activity.btdb
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -10,26 +9,23 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import com.mokee.imagnet.R
 import com.mokee.imagnet.event.BtdbMeDetailItemEvent
-import com.mokee.imagnet.event.CilicatDetailItemEvent
 import com.mokee.imagnet.event.RequestFailEvent
 import com.mokee.imagnet.model.BtdbMeDetailFile
-import com.mokee.imagnet.model.CilicatFileList
 import com.mokee.imagnet.model.RequestType
 import com.mokee.imagnet.presenter.NetworkPresenter
 import com.mokee.imagnet.utils.ClipboardUtil
 import com.mokee.imagnet.utils.MagnetUtil
+import com.mokee.imagnet.utils.ThunderUtil
 import kotlinx.android.synthetic.main.activity_btdb_me_detail.*
-import kotlinx.android.synthetic.main.activity_cilicat_detail.*
+import kotlinx.android.synthetic.main.activity_nima_detail.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
-import java.lang.StringBuilder
 
 class BtdbMeDetailActivity: AppCompatActivity() {
     private lateinit var detailUrl: String
@@ -66,7 +62,7 @@ class BtdbMeDetailActivity: AppCompatActivity() {
         event.item.attributes.forEach {
             sb.append(it).append("\n\n")
         }
-        btdb_me_detail_attribute.text = sb.substring(0, sb.lastIndex - 2)
+        btdb_me_detail_attribute.text = sb.substring(0, sb.lastIndex - 1)
 
         // Set file list to ui
         if(event.item.fileList.isNotEmpty()) {
@@ -81,6 +77,36 @@ class BtdbMeDetailActivity: AppCompatActivity() {
             }
         } else {
             Timber.d("File list is null or empty.")
+        }
+
+        if(!TextUtils.isEmpty(event.item.magnet)) {
+            btdb_detail_magnet.visibility = View.VISIBLE
+
+            btdb_detail_magnet.setOnClickListener {
+                MagnetUtil.startMagnet(this, event.item.magnet)
+            }
+            btdb_detail_magnet.setOnLongClickListener {
+                ClipboardUtil.copyToClipboard(this, event.item.magnet)
+                Toast.makeText(this, "Magnet链接已复制", Toast.LENGTH_SHORT).show()
+                true
+            }
+        } else {
+            Timber.d("Magnet link is null or empty.")
+        }
+
+        if(!TextUtils.isEmpty(event.item.thunder)) {
+            btdb_detail_xunlei.visibility = View.VISIBLE
+
+            btdb_detail_xunlei.setOnClickListener {
+                ThunderUtil.startThunder(this, event.item.thunder)
+            }
+            btdb_detail_xunlei.setOnLongClickListener {
+                ClipboardUtil.copyToClipboard(this, event.item.thunder)
+                Toast.makeText(this, "迅雷链接已复制", Toast.LENGTH_SHORT).show()
+                true
+            }
+        } else {
+            Timber.d("Thunder link is null or empty.")
         }
     }
 
