@@ -7,9 +7,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.mokee.imagnet.R
@@ -18,6 +16,7 @@ import com.mokee.imagnet.event.RequestFailEvent
 import com.mokee.imagnet.model.CilicatRecentItem
 import com.mokee.imagnet.model.RequestType
 import com.mokee.imagnet.presenter.NetworkPresenter
+import com.mokee.imagnet.utils.DownloadUtil
 import kotlinx.android.synthetic.main.activity_cilicat_search_detail.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -34,6 +33,8 @@ class CilicatSearchDetailActivity : AppCompatActivity() {
     private lateinit var mRecentList: List<CilicatRecentItem>
     private lateinit var mRecentLayoutManager: LinearLayoutManager
     private lateinit var mRecentAdapter: CilicatSearchDetailRecentAdapter
+
+    private var event: CilicatSearchDetailEvent? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +58,8 @@ class CilicatSearchDetailActivity : AppCompatActivity() {
     }
 
     private fun processDetail(event: CilicatSearchDetailEvent) {
+        this.event = event
+
         supportActionBar?.title = event.item.title
 
         val sb = StringBuilder()
@@ -103,6 +106,22 @@ class CilicatSearchDetailActivity : AppCompatActivity() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public fun onRequestFail(event: RequestFailEvent) {
         cilicat_search_detail_loading.visibility = View.GONE
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.cilicat_search_detail_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId) {
+            R.id.cilicat_search_detail_download -> {
+                event?.let {
+                    DownloadUtil.download(it.item.magnet, this)
+                }
+            }
+        }
+        return true
     }
 
     private fun loadData() {

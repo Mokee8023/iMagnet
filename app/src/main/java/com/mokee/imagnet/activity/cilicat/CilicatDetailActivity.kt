@@ -23,6 +23,7 @@ import com.mokee.imagnet.model.CilicatFileList
 import com.mokee.imagnet.model.RequestType
 import com.mokee.imagnet.presenter.NetworkPresenter
 import com.mokee.imagnet.utils.ClipboardUtil
+import com.mokee.imagnet.utils.DownloadUtil
 import com.mokee.imagnet.utils.MagnetUtil
 import com.mokee.imagnet.webview.WebViewActivity
 import kotlinx.android.synthetic.main.activity_cilicat_detail.*
@@ -129,13 +130,7 @@ class CilicatDetailActivity: AppCompatActivity() {
             }
 
             holder.magnet.setOnClickListener {
-                if(mFileList[position].magnet.contains("magnet")) {
-                    MagnetUtil.startMagnet(mContext, mFileList[position].magnet)
-                } else {
-                    val webviewIntent = Intent(mContext, WebViewActivity::class.java)
-                    webviewIntent.putExtra(WebViewActivity.WEBVIEW_LOAD_URL_KEY, mFileList[position].magnet)
-                    mContext.startActivity(webviewIntent)
-                }
+                DownloadUtil.download(mFileList[position].magnet, mContext)
             }
 
             holder.magnet.setOnLongClickListener {

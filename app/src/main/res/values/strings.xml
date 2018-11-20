@@ -12,6 +12,7 @@
     <string name="cilicat_search_detail_file_list_title">文件列表：</string>
 
     <string name="webview_open_other_title">浏览器打开</string>
+    <string name="cilicat_search_detail_download">下载</string>
 
     <string-array name="main_tab_text">
         <item>尼玛搜</item>

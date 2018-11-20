@@ -15,6 +15,7 @@ import com.mokee.imagnet.activity.cilicat.CilicatDetailActivity
 import com.mokee.imagnet.activity.cilicat.CilicatSearchDetailActivity
 import com.mokee.imagnet.constrant.MagnetConstrant
 import com.mokee.imagnet.model.CilicatSearchItem
+import com.mokee.imagnet.utils.DownloadUtil
 import com.mokee.imagnet.webview.WebViewActivity
 
 class CilicatSearchAdapter : RecyclerView.Adapter<CilicatSearchAdapter.CilicatSearchHolder> {
@@ -51,12 +52,7 @@ class CilicatSearchAdapter : RecyclerView.Adapter<CilicatSearchAdapter.CilicatSe
                 cilicatSearchDetail.putExtra(CilicatSearchDetailActivity.CILICAT_SEARCH_ITEM_DETAIL, mItemList[position].url)
                 mContext.startActivity(cilicatSearchDetail)
             } else {
-//                val urlIntent = Intent("android.intent.action.VIEW")
-//                urlIntent.data = Uri.parse(mItemList[position].url)
-//                mContext.startActivity(urlIntent)
-                val webviewIntent = Intent(mContext, WebViewActivity::class.java)
-                webviewIntent.putExtra(WebViewActivity.WEBVIEW_LOAD_URL_KEY, mItemList[position].url)
-                mContext.startActivity(webviewIntent)
+                DownloadUtil.openWeb(mItemList[position].url, mContext)
             }
         }
 
