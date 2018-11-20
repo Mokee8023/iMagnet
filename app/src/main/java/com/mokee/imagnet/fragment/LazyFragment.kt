@@ -1,9 +1,11 @@
 package com.mokee.imagnet.fragment
 
-import android.app.Fragment
+import android.support.v4.app.Fragment
 
 abstract class LazyFragment : Fragment() {
-    var lazyIsVisible: Boolean = false
+    private var lazyIsVisible: Boolean = false
+    private var loaded: Boolean = false
+    private var isPrepared: Boolean = false
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
@@ -17,8 +19,18 @@ abstract class LazyFragment : Fragment() {
         }
     }
 
+    fun isPrepared(prepared: Boolean) {
+        this.isPrepared = prepared
+        onVisable()
+    }
+
     abstract fun onLazyLoad()
 
-    fun onVisable() { onLazyLoad() }
-    fun onInVisable() { }
+    private fun onVisable() {
+        if(isPrepared && !loaded && lazyIsVisible) {
+            onLazyLoad()
+            loaded = true
+        }
+    }
+    private fun onInVisable() { }
 }

@@ -2,13 +2,11 @@ package com.mokee.imagnet.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.github.ybq.android.spinkit.SpinKitView
 import com.mokee.imagnet.R
 import com.mokee.imagnet.adapter.AliHomeAdapter
@@ -25,9 +23,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
 
-class AliFragment : Fragment() {
-    private var isPrepared: Boolean = false
-
+class AliFragment : LazyFragment() {
     private lateinit var mHomeListView: RecyclerView
     private lateinit var mSmartRefreshLayout: SmartRefreshLayout
     private lateinit var mSpinKitView: SpinKitView
@@ -48,17 +44,13 @@ class AliFragment : Fragment() {
         mSmartRefreshLayout = view.findViewById(R.id.ali_refreshLayout)
         mSpinKitView = view.findViewById(R.id.ali_loading)
 
-        isPrepared = true
         Timber.d("Ali fragment is prepared.")
-        onLazyLoad()
+
+        super.isPrepared(true)
         return view
     }
 
-    private fun onLazyLoad() {
-//        if(!isPrepared || !userVisibleHint) {
-//            return
-//        }
-
+    override fun onLazyLoad() {
         initView()
         loadData()
         mSpinKitView.visibility = View.VISIBLE
@@ -97,6 +89,8 @@ class AliFragment : Fragment() {
         mSmartRefreshLayout.finishLoadMore(true)
         mSpinKitView.visibility = View.GONE
 
+        requestContentFail = false
+
         Timber.d("Received home item event: ${event.item}")
         homeItemList.forEach {
             if(event.item == it) {
@@ -114,13 +108,15 @@ class AliFragment : Fragment() {
         mSpinKitView.visibility = View.GONE
     }
 
+    private var requestContentFail: Boolean = false
     @Subscribe(threadMode = ThreadMode.MAIN)
     public fun onContentFail(event: AliFailEvent) {
         mSmartRefreshLayout.finishRefresh(false)
         mSmartRefreshLayout.finishLoadMore(false)
         mSpinKitView.visibility = View.GONE
 
-        Toast.makeText(this.context, event.reason, Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this.context, event.reason, Toast.LENGTH_SHORT).show()
+        requestContentFail = true
     }
 
     override fun onDetach() {

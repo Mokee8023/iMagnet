@@ -2,7 +2,6 @@ package com.mokee.imagnet.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -23,9 +22,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
 
-class NiMaFragment : Fragment() {
-    private var isPrepared: Boolean = false
-
+class NiMaFragment : LazyFragment() {
     private lateinit var mHomeListView: RecyclerView
     private lateinit var mSmartRefreshLayout: SmartRefreshLayout
     private lateinit var mSpinKitView: SpinKitView
@@ -46,17 +43,13 @@ class NiMaFragment : Fragment() {
         mSmartRefreshLayout = view.findViewById(R.id.nima_refreshLayout)
         mSpinKitView = view.findViewById(R.id.nima_loading)
 
-        isPrepared = true
         Timber.d("Nima fragment is prepared.")
-        onLazyLoad()
+
+        super.isPrepared(true)
         return view
     }
 
-    private fun onLazyLoad() {
-        if(!isPrepared || !userVisibleHint) {
-            return
-        }
-
+    override fun onLazyLoad() {
         initView()
         loadData()
         mSpinKitView.visibility = View.VISIBLE

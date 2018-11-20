@@ -2,7 +2,6 @@ package com.mokee.imagnet.fragment.search
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -11,10 +10,10 @@ import android.view.ViewGroup
 import com.github.ybq.android.spinkit.SpinKitView
 import com.mokee.imagnet.R
 import com.mokee.imagnet.adapter.CilicatSearchAdapter
-import com.mokee.imagnet.adapter.NimaAdapter
 import com.mokee.imagnet.constrant.MagnetConstrant
 import com.mokee.imagnet.event.CilicatSearchEvent
 import com.mokee.imagnet.event.RequestFailEvent
+import com.mokee.imagnet.fragment.LazyFragment
 import com.mokee.imagnet.model.CilicatSearchItem
 import com.mokee.imagnet.model.RequestType
 import com.mokee.imagnet.presenter.NetworkPresenter
@@ -25,7 +24,7 @@ import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
 import java.net.URLEncoder
 
-class CilicatSearchFragment : Fragment() {
+class CilicatSearchFragment : LazyFragment() {
 
     private var mSearchUrl: String? = null
     private var mSearchText: String? = null
@@ -59,15 +58,20 @@ class CilicatSearchFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_cilicat_search, container, false)
-        initView(view)
-        return view
-    }
 
-    private fun initView(view: View) {
         mSearchListView = view.findViewById(R.id.search_cilicat_list)
         mSmartRefreshLayout = view.findViewById(R.id.search_cilicat_refreshLayout)
         mSpinKitView = view.findViewById(R.id.search_cilicat_loading)
 
+        super.isPrepared(true)
+        return view
+    }
+
+    override fun onLazyLoad() {
+        initView()
+    }
+
+    private fun initView() {
         mCurrentSearchPage = 1
 
         mLayoutManager = LinearLayoutManager(this.context)

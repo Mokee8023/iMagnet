@@ -63,6 +63,7 @@ class SearchActivity : AppCompatActivity() {
     private fun initViewPager() {
         search_pages.adapter = MagnetPagerAdapter(supportFragmentManager, tabArray, fragmentArray)
         search_pages.currentItem = FIRST_FRAGMENT_INDEX
+        search_pages.offscreenPageLimit = tabArray.size
 
         search_tab.setupWithViewPager(search_pages)
     }
