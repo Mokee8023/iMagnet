@@ -14,6 +14,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.mokee.imagnet.activity.SearchActivity
+import com.mokee.imagnet.activity.setting.SettingsActivity
 import com.mokee.imagnet.event.RequestFailEvent
 import com.mokee.imagnet.fragment.AliFragment
 import com.mokee.imagnet.fragment.BtdbFragment
@@ -190,16 +191,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_camera -> {
-            }
-            R.id.nav_gallery -> {
-
-            }
-            R.id.nav_slideshow -> {
-
-            }
-            R.id.nav_manage -> {
-
+            R.id.nav_setting -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
             }
             R.id.nav_share -> {
 

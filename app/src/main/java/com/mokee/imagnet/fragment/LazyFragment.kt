@@ -9,28 +9,25 @@ abstract class LazyFragment : Fragment() {
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
-
-        if(userVisibleHint) {
-            lazyIsVisible = true
-            onVisable()
-        } else {
-            lazyIsVisible = false
-            onInVisable()
-        }
+        onVisible(userVisibleHint)
     }
 
-    fun isPrepared(prepared: Boolean) {
-        this.isPrepared = prepared
-        onVisable()
-    }
+    private fun onVisible(visible: Boolean) {
+        lazyIsVisible = visible
 
-    abstract fun onLazyLoad()
-
-    private fun onVisable() {
         if(isPrepared && !loaded && lazyIsVisible) {
             onLazyLoad()
             loaded = true
         }
+
+        onUserVisible(lazyIsVisible)
     }
-    private fun onInVisable() { }
+
+    fun isPrepared(prepared: Boolean) {
+        this.isPrepared = prepared
+        onVisible(lazyIsVisible)
+    }
+
+    abstract fun onLazyLoad()
+    open fun onUserVisible(visible: Boolean) { }
 }

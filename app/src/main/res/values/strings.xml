@@ -28,5 +28,6 @@
         <item>BTDB</item>
     </string-array>
     <string name="title_activity_web_view">WebView</string>
-
+    <string name="main_drawer_menu_settings">设置</string>
+    <string name="title_activity_settings">Settings</string>
 </resources>

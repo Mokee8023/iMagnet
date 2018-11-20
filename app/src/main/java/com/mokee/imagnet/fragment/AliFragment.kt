@@ -1,5 +1,6 @@
 package com.mokee.imagnet.fragment
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -7,6 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
 import com.github.ybq.android.spinkit.SpinKitView
 import com.mokee.imagnet.R
 import com.mokee.imagnet.adapter.AliHomeAdapter
@@ -17,6 +19,7 @@ import com.mokee.imagnet.event.RequestFailEvent
 import com.mokee.imagnet.model.AliItem
 import com.mokee.imagnet.model.RequestType
 import com.mokee.imagnet.presenter.NetworkPresenter
+import com.mokee.imagnet.utils.SPUtil
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -31,6 +34,9 @@ class AliFragment : LazyFragment() {
     private var homeItemList: MutableList<AliItem> = mutableListOf()
     private lateinit var mLayoutManager: LinearLayoutManager
     private lateinit var mAdapter: AliHomeAdapter
+
+    private var userVisible: Boolean = false
+    private var requestContentFail: Boolean = false
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -108,7 +114,6 @@ class AliFragment : LazyFragment() {
         mSpinKitView.visibility = View.GONE
     }
 
-    private var requestContentFail: Boolean = false
     @Subscribe(threadMode = ThreadMode.MAIN)
     public fun onContentFail(event: AliFailEvent) {
         mSmartRefreshLayout.finishRefresh(false)
@@ -117,12 +122,46 @@ class AliFragment : LazyFragment() {
 
 //        Toast.makeText(this.context, event.reason, Toast.LENGTH_SHORT).show()
         requestContentFail = true
+        if(userVisible) { showDialog() }
+    }
+
+    override fun onUserVisible(visible: Boolean) {
+        userVisible = visible
+        if(visible && requestContentFail) {
+            showDialog()
+        }
+    }
+
+    private var webView: WebView? = null
+    private var authDialog: AlertDialog? = null
+
+    private fun showDialog() {
+        this.context?.let {context ->
+            if(SPUtil.getBooleanSetting(context, SPUtil.ALI_DIALOG_KEY)) {
+                webView = WebView(context)
+                webView?.let {
+                    it.loadUrl(MagnetConstrant.ALICILI_HOME_URL)
+                    authDialog = AlertDialog.Builder(context).setView(it).create()
+                    authDialog?.show()
+                }
+            }
+        }
     }
 
     override fun onDetach() {
         EventBus.getDefault().unregister(this)
         Timber.d("Ali fragment is detach.")
         super.onDetach()
+    }
+
+    override fun onDestroy() {
+        webView?.destroy()
+        authDialog?.dismiss()
+
+        webView = null
+        authDialog = null
+
+        super.onDestroy()
     }
 
     companion object {
