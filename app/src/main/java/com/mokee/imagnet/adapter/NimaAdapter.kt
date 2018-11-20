@@ -2,6 +2,7 @@ package com.mokee.imagnet.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -40,12 +41,6 @@ class NimaAdapter : RecyclerView.Adapter<NimaAdapter.NimaHolder> {
         holder.title.text = mNimaItemList[position].title
         holder.details.text = mNimaItemList[position].detail
 
-        holder.title.setOnClickListener {
-            val nimaDetail = Intent(mContext, NimaDetailsActivity::class.java)
-            nimaDetail.putExtra(NimaDetailsActivity.NIMA_ITEM_DETAIL, mNimaItemList[position].url)
-            mContext.startActivity(nimaDetail)
-        }
-
         holder.magnet.setOnClickListener {
             if(!TextUtils.isEmpty(mNimaItemList[position].magnet)) {
                 MagnetUtil.startMagnet(mContext, mNimaItemList[position].magnet)
@@ -58,15 +53,17 @@ class NimaAdapter : RecyclerView.Adapter<NimaAdapter.NimaHolder> {
             }
             true
         }
-//        holder.magnet.setOnClickListener {
-//            val magnetUrl = mNimaItemList[position].magnet
-//            if(!TextUtils.isEmpty(magnetUrl)) {
-//                MagnetPresenter.instance.magnet(magnetUrl)
-//            }
-//        }
+        arrayOf( holder.card, holder.title ).forEach {
+            it.setOnClickListener {
+                val nimaDetail = Intent(mContext, NimaDetailsActivity::class.java)
+                nimaDetail.putExtra(NimaDetailsActivity.NIMA_ITEM_DETAIL, mNimaItemList[position].url)
+                mContext.startActivity(nimaDetail)
+            }
+        }
     }
 
     class NimaHolder(view: View) : RecyclerView.ViewHolder(view) {
+        var card: CardView = view.findViewById(R.id.nima_list_card)
         var title: TextView = view.findViewById(R.id.nima_title)
         var details : TextView = view.findViewById(R.id.nima_details)
         var magnet: ImageButton = view.findViewById(R.id.nima_magnet)
