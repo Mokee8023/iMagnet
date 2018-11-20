@@ -2,6 +2,8 @@ package com.mokee.imagnet.activity.cilicat
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -14,6 +16,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import com.mokee.imagnet.R
+import com.mokee.imagnet.constrant.MagnetConstrant
 import com.mokee.imagnet.event.CilicatDetailItemEvent
 import com.mokee.imagnet.event.RequestFailEvent
 import com.mokee.imagnet.model.CilicatFileList
@@ -21,6 +24,7 @@ import com.mokee.imagnet.model.RequestType
 import com.mokee.imagnet.presenter.NetworkPresenter
 import com.mokee.imagnet.utils.ClipboardUtil
 import com.mokee.imagnet.utils.MagnetUtil
+import com.mokee.imagnet.webview.WebViewActivity
 import kotlinx.android.synthetic.main.activity_cilicat_detail.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -109,7 +113,6 @@ class CilicatDetailActivity: AppCompatActivity() {
             return mFileList.size
         }
 
-        @SuppressLint("SetTextI18n")
         override fun onBindViewHolder(holder: CilicatDetailHolder, position: Int) {
             holder.title.text = mFileList[position].name
 
@@ -117,8 +120,22 @@ class CilicatDetailActivity: AppCompatActivity() {
             holder.sharpness.text = mFileList[position].sharpness
             holder.publishTime.text = mFileList[position].publishTime
 
+            holder.magnet.apply {
+                if(mFileList[position].magnet.contains("magnet")) {
+                    this.setImageResource(R.drawable.magnet_icon)
+                } else {
+                    this.setImageResource(R.drawable.baidu_yun)
+                }
+            }
+
             holder.magnet.setOnClickListener {
-                MagnetUtil.startMagnet(mContext, mFileList[position].magnet)
+                if(mFileList[position].magnet.contains("magnet")) {
+                    MagnetUtil.startMagnet(mContext, mFileList[position].magnet)
+                } else {
+                    val webviewIntent = Intent(mContext, WebViewActivity::class.java)
+                    webviewIntent.putExtra(WebViewActivity.WEBVIEW_LOAD_URL_KEY, mFileList[position].magnet)
+                    mContext.startActivity(webviewIntent)
+                }
             }
 
             holder.magnet.setOnLongClickListener {

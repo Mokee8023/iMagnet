@@ -22,4 +22,6 @@
     <dimen name="text_margin">16dp</dimen>
 
     <dimen name="cilicat_search_download_icon_size">20dp</dimen>
+
+    <dimen name="open_other_broswer_icon_size">30dp</dimen>
 </resources>

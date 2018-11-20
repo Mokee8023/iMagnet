@@ -77,8 +77,8 @@ class NetworkPresenter private constructor(val context: Context) {
         resultCall.enqueue(object : Callback {
             override fun onResponse(call: Call, response: Response) {
                 EventBus.getDefault().post(ResponseEvent(mCurrentType, response))
-                Timber.d("Get $mCurrentUrl content completed, response.headers: %s , response.body:%s.",
-                        response.headers(), response.body())
+                Timber.d("Get %s content completed, response.headers: %s , response.body:%s.",
+                        mCurrentUrl, response.headers(), response.body())
             }
 
             override fun onFailure(call: Call, exception: IOException) {

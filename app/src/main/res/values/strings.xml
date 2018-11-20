@@ -11,6 +11,8 @@
     <string name="cilicat_search_detail_recent_title">最近列表：</string>
     <string name="cilicat_search_detail_file_list_title">文件列表：</string>
 
+    <string name="webview_open_other_title">浏览器打开</string>
+
     <string-array name="main_tab_text">
         <item>尼玛搜</item>
         <item>磁力猫</item>
@@ -24,5 +26,6 @@
         <!--<item>阿狸</item>-->
         <item>BTDB</item>
     </string-array>
+    <string name="title_activity_web_view">WebView</string>
 
 </resources>

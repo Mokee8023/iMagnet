@@ -1,19 +1,13 @@
 package com.mokee.imagnet.presenter.process.ali
 
 import android.text.TextUtils
-import com.mokee.imagnet.event.AliDetailItemEvent
-import com.mokee.imagnet.event.CilicatDetailItemEvent
-import com.mokee.imagnet.event.NimaDetailItemEvent
+import com.mokee.imagnet.event.*
 import com.mokee.imagnet.model.*
 import com.mokee.imagnet.presenter.process.ProcessResponse
 import okhttp3.Response
 import org.greenrobot.eventbus.EventBus
-import org.json.JSONObject
 import org.jsoup.Jsoup
-import org.w3c.dom.Element
-import org.w3c.dom.Text
 import timber.log.Timber
-import java.lang.Exception
 
 object AliDetailProcess : ProcessResponse() {
     override fun processResponse(response: Response) {
@@ -108,6 +102,9 @@ object AliDetailProcess : ProcessResponse() {
                         downloadSpeed, recentDownload, magnet, fileList
                 )))
             }
+        } else {
+            Timber.e("Can't get body class from ali response.")
+            EventBus.getDefault().post(AliDetailFailEvent("Can't analysis ali detail html content."))
         }
     }
 
