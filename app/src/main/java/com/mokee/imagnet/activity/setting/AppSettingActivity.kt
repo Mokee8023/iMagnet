@@ -9,11 +9,14 @@ import android.support.v7.app.AppCompatDelegate
 import android.view.MenuInflater
 
 abstract class AppSettingActivity : PreferenceActivity() {
-    private lateinit var mDelegate: AppCompatDelegate
+    private val mDelegate: AppCompatDelegate by lazy {
+        AppCompatDelegate.create(this, null)
+    }
+
+    val supportActionBar: ActionBar?
+        get() = mDelegate.supportActionBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        initDelegate()
-
         mDelegate.installViewFactory()
         mDelegate.onCreate(savedInstanceState)
         super.onCreate(savedInstanceState)
@@ -31,10 +34,6 @@ abstract class AppSettingActivity : PreferenceActivity() {
     override fun onPostResume() {
         super.onPostResume()
         mDelegate.onPostResume()
-    }
-
-    fun getSupportActionBar(): ActionBar? {
-        return mDelegate.supportActionBar
     }
 
     override fun onTitleChanged(title: CharSequence, color: Int) {
@@ -59,9 +58,5 @@ abstract class AppSettingActivity : PreferenceActivity() {
 
     override fun invalidateOptionsMenu() {
         mDelegate.invalidateOptionsMenu()
-    }
-
-    private fun initDelegate() {
-        mDelegate = AppCompatDelegate.create(this, null)
     }
 }

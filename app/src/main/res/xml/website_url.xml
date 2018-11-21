@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:summary="设置各个搜索链接的URL地址"
+    android:title="搜索链接">
+
+    <PreferenceCategory
+        android:summary="设置各个搜索链接的首页地址"
+        android:title="首页设置">
+        <EditTextPreference
+            android:defaultValue="http://www.nms222.com"
+            android:hint="尼玛搜"
+            android:key="nima_home_url"
+            android:title="尼玛搜" />
+
+        <EditTextPreference
+            android:defaultValue="https://www.cilimao.me"
+            android:hint="磁力猫首页"
+            android:key="cilicat_home_url"
+            android:title="磁力猫" />
+
+        <EditTextPreference
+            android:defaultValue="https://alicili.me"
+            android:hint="阿狸磁力首页"
+            android:key="alicili_home_url"
+            android:title="阿狸磁力" />
+
+        <EditTextPreference
+            android:defaultValue="https://btdb.me"
+            android:hint="BTDB首页"
+            android:key="btdb_me_home_url"
+            android:title="BTDB" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:summary="设置各个搜索链接的搜索地址"
+        android:title="搜索页设置">
+        <EditTextPreference
+            android:defaultValue="http://www.nms222.com/l/"
+            android:hint="尼玛搜索"
+            android:key="nima_search_url"
+            android:title="尼玛搜索" />
+
+        <EditTextPreference
+            android:defaultValue="https://btdb.me/list/"
+            android:hint="BTDB搜索"
+            android:key="btdb_me_search_url"
+            android:title="BTDB搜索" />
+    </PreferenceCategory>
+</PreferenceScreen>
