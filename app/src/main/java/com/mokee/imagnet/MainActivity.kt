@@ -23,6 +23,7 @@ import com.mokee.imagnet.fragment.NiMaFragment
 import com.mokee.imagnet.model.ResponseEvent
 import com.mokee.imagnet.presenter.MessagePresenter
 import com.mokee.imagnet.presenter.NetworkPresenter
+import com.mokee.imagnet.utils.DrawMenuUtil
 import com.mokee.imagnet.utils.SoftKeyBoardListener
 import com.mokee.imagnet.utils.SoftKeyBoardListener.OnSoftKeyBoardChangeListener
 import kotlinx.android.synthetic.main.activity_main.*
@@ -195,9 +196,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(Intent(this, SettingsActivity::class.java))
             }
             R.id.nav_share -> {
-
+                DrawMenuUtil.share(this, packageName)
             }
-            R.id.nav_send -> {
+            R.id.nav_about -> {
 
             }
         }

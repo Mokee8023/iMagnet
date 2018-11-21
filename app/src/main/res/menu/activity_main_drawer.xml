@@ -22,16 +22,16 @@
             android:title="@string/main_drawer_menu_settings" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="@string/main_drawer_menu_second_title">
         <menu>
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:title="@string/main_drawer_menu_share" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_menu_about"
+                android:title="@string/main_drawer_menu_about" />
         </menu>
     </item>
 
