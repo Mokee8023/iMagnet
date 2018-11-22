@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.mokee.imagnet.R
+import com.mokee.imagnet.utils.ClickSpan
 import kotlinx.android.synthetic.main.activity_about.*
 import kotlinx.android.synthetic.main.content_about.*
 
@@ -34,7 +35,7 @@ class AboutActivity : AppCompatActivity() {
     private fun initView() {
         val githubString = SpannableString("Github地址：$GITHUB_ADDRESS")
         githubString.setSpan(
-                URLSpan(GITHUB_ADDRESS),
+                ClickSpan(this, GITHUB_ADDRESS),
                 "Github地址：".length,
                 githubString.length,
                 SpannableString.SPAN_EXCLUSIVE_INCLUSIVE)
@@ -43,7 +44,7 @@ class AboutActivity : AppCompatActivity() {
 
         val apkString = SpannableString("Release APK地址：$RELEASE_ADDRESS")
         apkString.setSpan(
-                URLSpan(RELEASE_ADDRESS),
+                ClickSpan(this, RELEASE_ADDRESS),
                 "Release APK地址：".length,
                 apkString.length,
                 SpannableString.SPAN_EXCLUSIVE_INCLUSIVE)

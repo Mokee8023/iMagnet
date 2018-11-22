@@ -16,7 +16,6 @@ import com.mokee.imagnet.activity.cilicat.CilicatSearchDetailActivity
 import com.mokee.imagnet.constrant.MagnetConstrant
 import com.mokee.imagnet.model.CilicatSearchItem
 import com.mokee.imagnet.utils.DownloadUtil
-import com.mokee.imagnet.webview.WebViewActivity
 
 class CilicatSearchAdapter : RecyclerView.Adapter<CilicatSearchAdapter.CilicatSearchHolder> {
     private var mContext: Context

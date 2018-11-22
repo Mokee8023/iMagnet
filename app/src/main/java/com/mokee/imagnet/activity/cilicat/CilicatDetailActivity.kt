@@ -24,8 +24,6 @@ import com.mokee.imagnet.model.RequestType
 import com.mokee.imagnet.presenter.NetworkPresenter
 import com.mokee.imagnet.utils.ClipboardUtil
 import com.mokee.imagnet.utils.DownloadUtil
-import com.mokee.imagnet.utils.MagnetUtil
-import com.mokee.imagnet.webview.WebViewActivity
 import kotlinx.android.synthetic.main.activity_cilicat_detail.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe

@@ -1,8 +1,6 @@
 package com.mokee.imagnet.utils
 
 import android.content.Context
-import android.content.Intent
-import com.mokee.imagnet.webview.WebViewActivity
 
 object DownloadUtil {
     fun download(url: String, context: Context) {
@@ -14,8 +12,6 @@ object DownloadUtil {
     }
 
     fun openWeb(url: String, context: Context) {
-        val webviewIntent = Intent(context, WebViewActivity::class.java)
-        webviewIntent.putExtra(WebViewActivity.WEBVIEW_LOAD_URL_KEY, url)
-        context.startActivity(webviewIntent)
+        URLHandleUtil.innerWebview(context, url)
     }
 }

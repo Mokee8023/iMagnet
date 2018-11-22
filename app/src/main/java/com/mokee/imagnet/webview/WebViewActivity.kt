@@ -1,7 +1,6 @@
 package com.mokee.imagnet.webview
 
 import android.Manifest
-import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
@@ -20,6 +19,7 @@ import android.app.DownloadManager
 import android.content.Context
 import android.os.Environment
 import android.webkit.*
+import com.mokee.imagnet.utils.URLHandleUtil
 import com.tbruyelle.rxpermissions2.RxPermissions
 
 
@@ -147,9 +147,7 @@ class WebViewActivity : AppCompatActivity() {
                 goBack()
             }
             R.id.webview_open_other -> {
-                val urlIntent = Intent("android.intent.action.VIEW")
-                urlIntent.data = Uri.parse(mLoadUrl)
-                startActivity(urlIntent)
+                URLHandleUtil.outWebview(this, mLoadUrl)
             }
         }
         return true
