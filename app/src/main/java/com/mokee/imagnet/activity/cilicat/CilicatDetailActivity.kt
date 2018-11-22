@@ -1,9 +1,6 @@
 package com.mokee.imagnet.activity.cilicat
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -16,7 +13,6 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import com.mokee.imagnet.R
-import com.mokee.imagnet.constrant.MagnetConstrant
 import com.mokee.imagnet.event.CilicatDetailItemEvent
 import com.mokee.imagnet.event.RequestFailEvent
 import com.mokee.imagnet.model.CilicatFileList
@@ -29,7 +25,6 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
-import java.lang.StringBuilder
 
 class CilicatDetailActivity: AppCompatActivity() {
     private lateinit var detailUrl: String

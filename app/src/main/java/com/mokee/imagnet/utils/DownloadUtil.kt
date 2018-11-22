@@ -12,6 +12,6 @@ object DownloadUtil {
     }
 
     fun openWeb(url: String, context: Context) {
-        URLHandleUtil.innerWebview(context, url)
+        URLHandleUtil.handleUrl(context, url)
     }
 }

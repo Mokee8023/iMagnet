@@ -28,7 +28,7 @@
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="setting_url_load_type"
-            android:summaryOff="不使用内置Webview加载URL,用户选择"
+            android:summaryOff="不使用内置Webview加载URL，用户选择"
             android:summaryOn="使用内置Webview加载URL"
             android:title="URL加载方式" />
     </PreferenceCategory>
