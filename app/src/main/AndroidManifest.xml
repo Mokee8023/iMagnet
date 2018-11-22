@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/ActivityBarTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".MainActivity"
@@ -38,8 +38,10 @@
         <activity
             android:name=".activity.setting.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".activity.setting.WebsiteUrlPreferenceActivity" />
+            android:theme="@style/ActivityBarTheme" />
+        <activity
+            android:name=".activity.setting.WebsiteUrlPreferenceActivity"
+            android:theme="@style/ActivityBarTheme" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
