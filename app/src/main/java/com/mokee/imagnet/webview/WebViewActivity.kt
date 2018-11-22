@@ -1,5 +1,6 @@
 package com.mokee.imagnet.webview
 
+import android.Manifest
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -18,8 +19,8 @@ import java.lang.Exception
 import android.app.DownloadManager
 import android.content.Context
 import android.os.Environment
-import android.os.Environment.DIRECTORY_DOWNLOADS
 import android.webkit.*
+import com.tbruyelle.rxpermissions2.RxPermissions
 
 
 class WebViewActivity : AppCompatActivity() {
@@ -92,14 +93,22 @@ class WebViewActivity : AppCompatActivity() {
         webview_single.requestFocus()
 
         webview_single.setDownloadListener { url: String, _: String, contentDisposition: String, mimeType: String, _: Long ->
-            val request = DownloadManager.Request(Uri.parse(url))
-            val filename= URLUtil.guessFileName(url, contentDisposition, mimeType)
+            RxPermissions(this)
+                    .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    .subscribe {granted ->
+                        if(granted) {
+                            val request = DownloadManager.Request(Uri.parse(url))
+                            val filename= URLUtil.guessFileName(url, contentDisposition, mimeType)
 
-            request.allowScanningByMediaScanner()
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename)
-            val dm = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-            dm.enqueue(request)
+                            request.allowScanningByMediaScanner()
+                            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename)
+                            val dm = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+                            dm.enqueue(request)
+                        } else {
+                            Toast.makeText(this, "未获取权限，无法下载，请从其他通道下载.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
         }
     }
 
