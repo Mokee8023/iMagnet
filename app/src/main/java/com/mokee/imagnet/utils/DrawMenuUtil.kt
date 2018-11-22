@@ -5,9 +5,15 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.support.v4.content.FileProvider
+import com.mokee.imagnet.activity.about.AboutActivity
+import com.mokee.imagnet.activity.setting.SettingsActivity
 import java.io.File
 
 object DrawMenuUtil {
+    fun setting(context: Context) {
+        context.startActivity(Intent(context, SettingsActivity::class.java))
+    }
+
     fun share(context: Context, packageName: String) {
         Thread {
             val appInfo = context.packageManager.getPackageInfo(packageName, 0)
@@ -30,5 +36,10 @@ object DrawMenuUtil {
             }
             context.startActivity(shareIntent)
         }.start()
+    }
+
+    fun about(context: Context) {
+        val aboutIntent = Intent(context, AboutActivity::class.java)
+        context.startActivity(aboutIntent)
     }
 }

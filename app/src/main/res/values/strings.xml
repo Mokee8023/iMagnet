@@ -33,4 +33,7 @@
     <string name="main_drawer_menu_share">分享</string>
     <string name="main_drawer_menu_about">关于</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_about">关于</string>
+    <string name="about_person_information_title">开发者信息</string>
+    <string name="about_project_information_title">软件信息</string>
 </resources>

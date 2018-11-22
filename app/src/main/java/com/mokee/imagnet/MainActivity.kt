@@ -193,13 +193,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_setting -> {
-                startActivity(Intent(this, SettingsActivity::class.java))
+                DrawMenuUtil.setting(this)
             }
             R.id.nav_share -> {
                 DrawMenuUtil.share(this, packageName)
             }
             R.id.nav_about -> {
-
+                DrawMenuUtil.about(this)
             }
         }
 
