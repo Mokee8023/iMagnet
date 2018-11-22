@@ -9,16 +9,18 @@ import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.webkit.WebChromeClient
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.Toast
 import com.mokee.imagnet.R
 import kotlinx.android.synthetic.main.activity_web_view.*
 import kotlinx.android.synthetic.main.content_web_view.*
 import timber.log.Timber
 import java.lang.Exception
+import android.app.DownloadManager
+import android.content.Context
+import android.os.Environment
+import android.os.Environment.DIRECTORY_DOWNLOADS
+import android.webkit.*
+
 
 class WebViewActivity : AppCompatActivity() {
     private var mLoadUrl: String = ""
@@ -88,6 +90,17 @@ class WebViewActivity : AppCompatActivity() {
         webview_single.webViewClient = webViewClient
 
         webview_single.requestFocus()
+
+        webview_single.setDownloadListener { url: String, _: String, contentDisposition: String, mimeType: String, _: Long ->
+            val request = DownloadManager.Request(Uri.parse(url))
+            val filename= URLUtil.guessFileName(url, contentDisposition, mimeType)
+
+            request.allowScanningByMediaScanner()
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename)
+            val dm = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+            dm.enqueue(request)
+        }
     }
 
     private var webViewClient = object : WebViewClient() {

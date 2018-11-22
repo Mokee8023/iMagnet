@@ -23,11 +23,23 @@ class AboutActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        val spannableString = SpannableString(GITHUB_ADDRESS)
-        val githubUrlSpan = URLSpan(GITHUB_ADDRESS)
-        spannableString.setSpan(githubUrlSpan, 0, GITHUB_ADDRESS.length, SpannableString.SPAN_EXCLUSIVE_INCLUSIVE)
-        project_info.text = spannableString
-        project_info.movementMethod = LinkMovementMethod.getInstance()
+        val githubString = SpannableString("Github地址：$GITHUB_ADDRESS")
+        githubString.setSpan(
+                URLSpan(GITHUB_ADDRESS),
+                "Github地址：".length,
+                githubString.length,
+                SpannableString.SPAN_EXCLUSIVE_INCLUSIVE)
+        project_info_github.text = githubString
+        project_info_github.movementMethod = LinkMovementMethod.getInstance()
+
+        val apkString = SpannableString("Release APK地址：$RELEASE_ADDRESS")
+        apkString.setSpan(
+                URLSpan(RELEASE_ADDRESS),
+                "Release APK地址：".length,
+                apkString.length,
+                SpannableString.SPAN_EXCLUSIVE_INCLUSIVE)
+        project_info_store_path.text = apkString
+        project_info_store_path.movementMethod = LinkMovementMethod.getInstance()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -39,5 +51,6 @@ class AboutActivity : AppCompatActivity() {
 
     companion object {
         private const val GITHUB_ADDRESS = "https://github.com/Mokee8023/iMagnet"
+        private const val RELEASE_ADDRESS = "http://45.63.60.218/owncloud/index.php/s/8Ww51EyLplabebx"
     }
 }
