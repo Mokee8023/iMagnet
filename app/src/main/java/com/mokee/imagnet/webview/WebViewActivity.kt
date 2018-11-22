@@ -18,6 +18,7 @@ import com.mokee.imagnet.R
 import kotlinx.android.synthetic.main.activity_web_view.*
 import kotlinx.android.synthetic.main.content_web_view.*
 import timber.log.Timber
+import java.lang.Exception
 
 class WebViewActivity : AppCompatActivity() {
     private var mLoadUrl: String = ""
@@ -37,7 +38,15 @@ class WebViewActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-        mLoadUrl = intent.getStringExtra(WEBVIEW_LOAD_URL_KEY)
+        try {
+            mLoadUrl = if(intent.data != null) {
+                intent.data.toString()
+            } else {
+                intent.getStringExtra(WEBVIEW_LOAD_URL_KEY)
+            }
+        } catch (ex: Exception) {
+            Timber.e("Get load url happen exception.")
+        }
         Timber.d("Received url is $mLoadUrl")
         if(TextUtils.isEmpty(mLoadUrl)) {
             Toast.makeText(this, "Url is null or empty.", Toast.LENGTH_SHORT).show()

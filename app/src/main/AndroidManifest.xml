@@ -34,7 +34,18 @@
             android:name=".webview.WebViewActivity"
             android:label="@string/title_activity_web_view"
             android:launchMode="singleTask"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:scheme="about" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activity.setting.SettingsActivity"
             android:label="@string/title_activity_settings"
