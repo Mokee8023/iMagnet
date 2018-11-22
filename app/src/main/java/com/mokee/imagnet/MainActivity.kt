@@ -1,6 +1,7 @@
 package com.mokee.imagnet
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
@@ -14,8 +15,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.mokee.imagnet.activity.SearchActivity
-import com.mokee.imagnet.activity.setting.SettingsActivity
 import com.mokee.imagnet.event.RequestFailEvent
+import com.mokee.imagnet.event.TabChangeEvent
 import com.mokee.imagnet.fragment.AliFragment
 import com.mokee.imagnet.fragment.BtdbFragment
 import com.mokee.imagnet.fragment.CilicatFragment
@@ -24,6 +25,7 @@ import com.mokee.imagnet.model.ResponseEvent
 import com.mokee.imagnet.presenter.MessagePresenter
 import com.mokee.imagnet.presenter.NetworkPresenter
 import com.mokee.imagnet.utils.DrawMenuUtil
+import com.mokee.imagnet.utils.SPUtil
 import com.mokee.imagnet.utils.SoftKeyBoardListener
 import com.mokee.imagnet.utils.SoftKeyBoardListener.OnSoftKeyBoardChangeListener
 import kotlinx.android.synthetic.main.activity_main.*
@@ -36,8 +38,9 @@ import timber.log.Timber
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    private lateinit var tabArray: List<String>
+    private var tabArray: MutableList<String> = mutableListOf()
     private var fragmentArray: MutableList<Fragment> = mutableListOf()
+    private lateinit var magnetPagerAdapter: MagnetPagerAdapter
 
     // Presenter
     private lateinit var mMessagePresenter: MessagePresenter
@@ -67,24 +70,47 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 toolbar.requestFocus()
             }
         })
+
+        if(isTabChange) {
+            isTabChange = false
+        }
+    }
+
+    /** Clear array data */
+    private fun clearArray() {
+        tabArray.clear()
+        fragmentArray.clear()
     }
 
     /** Init data */
     private fun initData() {
-        tabArray = resources.getStringArray(R.array.main_tab_text).toList()
+        clearArray()
+
+        val tabs = resources.getStringArray(R.array.main_tab_text).toList()
+        val selectedIndex = SPUtil.getSetSetting(this, "setting_selected_card")
+
+        // new tab
+        (0 until tabs.size).forEach {index ->
+            if(selectedIndex.contains(index.toString())) {
+                tabArray.add(tabs[index])
+            }
+        }
+
         // new fragments
-        fragmentArray.add(NiMaFragment())
-        fragmentArray.add(CilicatFragment())
-        fragmentArray.add(AliFragment())
-        fragmentArray.add(BtdbFragment())
+        selectedIndex.forEach {
+            when(it) {
+                "0" -> fragmentArray.add(CilicatFragment())
+                "1" -> fragmentArray.add(NiMaFragment())
+                "2" -> fragmentArray.add(BtdbFragment())
+                "3" -> fragmentArray.add(AliFragment())
+            }
+        }
     }
 
     /** Init bar */
     private fun initBar() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-
-        initTab()
     }
 
     /** Init tab */
@@ -95,6 +121,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun initView() {
+        initTab()
         initViewPager()
 
         val toggle = ActionBarDrawerToggle(
@@ -107,7 +134,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     /** Init view pager */
     private fun initViewPager() {
-        main_magnet_pages.adapter = MagnetPagerAdapter(supportFragmentManager, tabArray, fragmentArray)
+        magnetPagerAdapter = MagnetPagerAdapter(supportFragmentManager, tabArray, fragmentArray)
+        main_magnet_pages.adapter = magnetPagerAdapter
         main_magnet_pages.currentItem = FIRST_FRAGMENT_INDEX
         main_magnet_pages.offscreenPageLimit = tabArray.size
 
@@ -127,6 +155,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     @Subscribe(threadMode = ThreadMode.MAIN)
     public fun onRequestFail(event: RequestFailEvent) {
         mMessagePresenter.processRequestFail(this.applicationContext, event)
+    }
+
+    private var isTabChange = false
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public fun onTabChange(event: TabChangeEvent) {
+        isTabChange = true
     }
 
     override fun onBackPressed() {

@@ -46,8 +46,8 @@ class CilicatFragment : LazyFragment() {
         mSpinKitView = view.findViewById(R.id.cilicat_loading)
 
         Timber.d("Cilicat fragment is prepared.")
-
         super.isPrepared(true)
+
         return view
     }
 

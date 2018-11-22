@@ -4,12 +4,26 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.text.TextUtils
 import com.mokee.imagnet.App
+import com.mokee.imagnet.R
 
 object SPUtil {
+    fun getSharedPreference(context: Context) : SharedPreferences {
+        return context.getSharedPreferences(
+                context.packageName + "_preferences", Context.MODE_PRIVATE)
+    }
+
     fun getBooleanSetting(context: Context, key: String, defValue: Boolean = false): Boolean {
         val sp = context.getSharedPreferences(
                 context.packageName + "_preferences", Context.MODE_PRIVATE)
         return sp.getBoolean(key, defValue)
+    }
+
+    fun getSetSetting(context: Context, key: String): Set<String> {
+        val defValue = context.resources.
+                getStringArray(R.array.setting_selected_card_entries_index_default).toSet()
+        val sp = context.getSharedPreferences(
+                context.packageName + "_preferences", Context.MODE_PRIVATE)
+        return sp.getStringSet(key, defValue)
     }
 
     fun registerChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) =

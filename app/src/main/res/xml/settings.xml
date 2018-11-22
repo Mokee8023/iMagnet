@@ -23,8 +23,7 @@
             android:targetPackage="com.mokee.imagnet" />
     </Preference>
 
-    <PreferenceCategory
-        android:title="URL链接加载方式">
+    <PreferenceCategory android:title="URL链接加载方式">
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="setting_url_load_type"
@@ -32,4 +31,17 @@
             android:summaryOn="使用内置Webview加载URL"
             android:title="URL加载方式" />
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="列表选择">
+        <MultiSelectListPreference
+            android:defaultValue="@array/setting_selected_card_entries_index_default"
+            android:dialogTitle="选择选项卡"
+            android:dialogIcon="@mipmap/ic_launcher"
+            android:entries="@array/main_tab_text"
+            android:entryValues="@array/setting_selected_card_entries_index"
+            android:key="setting_selected_card"
+            android:summary="请选择需要加载哪些资源选项卡"
+            android:title="选项卡显示" />
+    </PreferenceCategory>
+
 </PreferenceScreen>
