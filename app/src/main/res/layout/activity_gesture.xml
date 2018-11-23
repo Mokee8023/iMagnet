@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0099cc"
+    tools:context=".activity.gesture.GestureActivity">
+
+    <LinearLayout
+        android:id="@+id/fullscreen_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:keepScreenOn="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/gesture_show_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="36dp"
+            android:fontFamily="sans-serif-thin"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="Welcome"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <com.andrognito.patternlockview.PatternLockView
+            android:id="@+id/patter_lock_view"
+            android:layout_width="280dp"
+            android:layout_height="280dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="36dp"
+            app:aspectRatio="square"
+            app:aspectRatioEnabled="true"
+            app:correctStateColor="@android:color/holo_green_light"
+            app:dotAnimationDuration="150"
+            app:dotCount="3"
+            app:wrongStateColor="@android:color/holo_red_light" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <RelativeLayout
+            android:id="@+id/fullscreen_content_controls"
+            style="?metaButtonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            tools:ignore="UselessParent">
+
+            <Button
+                android:id="@+id/gesture_show_clear"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:clickable="false"
+                android:text="@string/gesture_show_clear_text"
+                android:textColor="@android:color/darker_gray" />
+
+            <Button
+                android:id="@+id/gesture_show_next"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:clickable="false"
+                android:text="@string/gesture_show_next"
+                android:textColor="@android:color/darker_gray" />
+
+        </RelativeLayout>
+    </FrameLayout>
+
+</FrameLayout>

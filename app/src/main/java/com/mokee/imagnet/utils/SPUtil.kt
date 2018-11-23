@@ -12,18 +12,22 @@ object SPUtil {
                 context.packageName + "_preferences", Context.MODE_PRIVATE)
     }
 
+    fun getStringSetting(context: Context, key: String, defValue: String = ""): String {
+        return getSharedPreference(context).getString(key, defValue)
+    }
+
+    fun setStringSetting(context: Context, key: String, value: String) {
+        getSharedPreference(context).edit().putString(key, value).apply()
+    }
+
     fun getBooleanSetting(context: Context, key: String, defValue: Boolean = false): Boolean {
-        val sp = context.getSharedPreferences(
-                context.packageName + "_preferences", Context.MODE_PRIVATE)
-        return sp.getBoolean(key, defValue)
+        return getSharedPreference(context).getBoolean(key, defValue)
     }
 
     fun getSetSetting(context: Context, key: String): Set<String> {
         val defValue = context.resources.
                 getStringArray(R.array.setting_selected_card_entries_index_default).toSet()
-        val sp = context.getSharedPreferences(
-                context.packageName + "_preferences", Context.MODE_PRIVATE)
-        return sp.getStringSet(key, defValue)
+        return getSharedPreference(context).getStringSet(key, defValue)
     }
 
     fun registerChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) =
@@ -35,8 +39,7 @@ object SPUtil {
 
     fun updateSetting(arrayHash: HashMap<String, String>) {
         App.appContext?.let { context ->
-            val sp = context.getSharedPreferences(
-                    context.packageName + "_preferences", Context.MODE_PRIVATE)
+            val sp = getSharedPreference(context)
 
             arrayHash.keys.forEach { key ->
                 if(TextUtils.isEmpty(sp.getString(key, ""))) {

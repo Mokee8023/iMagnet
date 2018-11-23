@@ -6,4 +6,6 @@
 
     <color name="title_text_color">#00C549</color>
     <color name="details_text_color">#000000</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

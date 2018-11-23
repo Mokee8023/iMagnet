@@ -12,6 +12,8 @@ object MagnetConstrant {
     var BTDB_ME_HOME_URL = "https://btdb.me"
     var BTDB_ME_SEARCH_URL = "https://btdb.me/list/"
 
+    const val PATTERN_STRING_KEY = "pattern_string_key"
+
     init {
 //        SPUtil.updateSetting(
 //                hashMapOf(

@@ -44,4 +44,13 @@
             android:title="选项卡显示" />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="手势解锁">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="setting_gesture_lock_key"
+            android:summaryOn="手势解锁应用"
+            android:title="使用手势解锁" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

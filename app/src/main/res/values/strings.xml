@@ -49,4 +49,20 @@
     <string name="title_activity_about">关于</string>
     <string name="about_person_information_title">开发者信息</string>
     <string name="about_project_information_title">软件信息</string>
+
+    <string name="title_activity_gesture">GestureActivity</string>
+    <string name="gesture_show_next">下一步</string>
+    <string name="gesture_show_ensure">确认</string>
+    <string name="gesture_show_clear_text">清除</string>
+
+    <string name="gesture_show_setup_one">请绘制解锁图案</string>
+    <string name="gesture_show_setup_drawing">完成后松开手指</string>
+    <string name="gesture_show_setup_first_save">图案已记录</string>
+    <string name="gesture_show_setup_again">再次绘制图案</string>
+    <string name="gesture_show_setup_error">图案错误</string>
+    <string name="gesture_show_setup_success">设置成功</string>
+
+    <string name="gesture_show_unlock_error">图案错误</string>
+    <string name="gesture_show_unlock_success">匹配成功</string>
+    <string name="gesture_show_unlock_home">请绘制手势解锁</string>
 </resources>

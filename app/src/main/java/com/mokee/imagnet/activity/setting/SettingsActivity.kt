@@ -1,14 +1,19 @@
 package com.mokee.imagnet.activity.setting
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.CheckBoxPreference
 import android.preference.EditTextPreference
 import android.preference.MultiSelectListPreference
 import android.preference.PreferenceFragment
 import com.mokee.imagnet.R
+import com.mokee.imagnet.activity.gesture.GestureActivity
+import com.mokee.imagnet.constrant.MagnetConstrant
 import com.mokee.imagnet.event.TabChangeEvent
 import com.mokee.imagnet.utils.SPUtil
 import org.greenrobot.eventbus.EventBus
+import timber.log.Timber
 import java.lang.StringBuilder
 
 class SettingsActivity : AppSettingActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -48,6 +53,18 @@ class SettingsActivity : AppSettingActivity(), SharedPreferences.OnSharedPrefere
                 }
                 EventBus.getDefault().post(TabChangeEvent(selectedIndex))
             }
+            is CheckBoxPreference -> {
+                val gesture = SPUtil.getBooleanSetting(this, "setting_gesture_lock_key")
+                if(gesture) {
+                    val gestureIntent = Intent(this, GestureActivity::class.java)
+                    gestureIntent.putExtra(GestureActivity.INTENT_EXTRA_KEY, GestureActivity.Type.SETUP)
+                    startActivityForResult(gestureIntent, GESTURE_REQUEST_CODE)
+                } else {
+                    SPUtil.setStringSetting(this, MagnetConstrant.PATTERN_STRING_KEY, "")
+                }
+
+                (findPreference("setting_gesture_lock_key") as CheckBoxPreference).isChecked = false
+            }
         }
     }
 
@@ -80,5 +97,17 @@ class SettingsActivity : AppSettingActivity(), SharedPreferences.OnSharedPrefere
     override fun isValidFragment(fragmentName: String): Boolean {
         return PreferenceFragment::class.java.name == fragmentName ||
                 WebsiteUrlPreferenceActivity::class.java.name == fragmentName
+    }
+
+    companion object {
+        const val GESTURE_REQUEST_CODE = 99
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(requestCode == GESTURE_REQUEST_CODE) {
+            if(resultCode == RESULT_OK) {
+                (findPreference("setting_gesture_lock_key") as CheckBoxPreference).isChecked = true
+            }
+        }
     }
 }

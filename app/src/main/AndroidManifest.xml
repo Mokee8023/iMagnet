@@ -19,10 +19,11 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity android:name=".activity.nima.NimaDetailsActivity" />
         <activity android:name=".activity.SearchActivity" />
@@ -68,6 +69,15 @@
             android:name=".activity.about.AboutActivity"
             android:label="@string/title_activity_about"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.gesture.GestureActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/FullscreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
