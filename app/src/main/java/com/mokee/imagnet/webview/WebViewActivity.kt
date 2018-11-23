@@ -129,8 +129,15 @@ class WebViewActivity : AppCompatActivity() {
 
     private var webChromeClient = object: WebChromeClient() {
         override fun onReceivedTitle(view: WebView?, title: String?) {
-            supportActionBar?.title = view?.title
-            Timber.d("Received title is ${view?.title}")
+            var titleString = view?.title
+            titleString?.let {
+                val index = it.lastIndexOf("_")
+                if(index > 0) {
+                    titleString = it.substring(0, index)
+                }
+            }
+            supportActionBar?.title = titleString
+            Timber.d("Received title is $titleString")
         }
 
         override fun onProgressChanged(view: WebView?, newProgress: Int) {
