@@ -10,6 +10,10 @@ import com.mokee.imagnet.activity.setting.SettingsActivity
 import java.io.File
 
 object DrawMenuUtil {
+    fun downloadManager(context: Context) {
+//        context.startActivity(Intent(context, SettingsActivity::class.java))
+    }
+
     fun setting(context: Context) {
         context.startActivity(Intent(context, SettingsActivity::class.java))
     }

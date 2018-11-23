@@ -226,6 +226,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.download_manager -> {
+
+            }
             R.id.nav_setting -> {
                 DrawMenuUtil.setting(this)
             }
