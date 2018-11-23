@@ -50,8 +50,6 @@ class CilicatSearchFragment : LazyFragment() {
         mSearchText = arguments?.getString(SEARCH_EXTRA_TEXT)
         mSearchText?.let {
             mSearchUrl = MagnetConstrant.CILICAT_HOME_URL + "/search?word=" + URLEncoder.encode(it) + "&page=1"
-            NetworkPresenter.instance?.getHtmlContent(
-                    NetworkPresenter.NetworkItem(RequestType.CILICAT_SEARCH, mSearchUrl!!))
         }
     }
 
@@ -69,6 +67,7 @@ class CilicatSearchFragment : LazyFragment() {
 
     override fun onLazyLoad() {
         initView()
+        loadData()
     }
 
     private fun initView() {

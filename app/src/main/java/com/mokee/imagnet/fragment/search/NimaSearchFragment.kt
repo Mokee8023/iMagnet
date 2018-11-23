@@ -49,8 +49,6 @@ class NimaSearchFragment : LazyFragment() {
         mSearchText = arguments?.getString(SEARCH_EXTRA_TEXT)
         mSearchText?.let {
             mSearchUrl = MagnetConstrant.NIMA_SEARCH_URL + URLEncoder.encode(it) + "-hot-desc-1"
-            NetworkPresenter.instance?.getHtmlContent(
-                    NetworkPresenter.NetworkItem(RequestType.NIMA_SEARCH, mSearchUrl!!))
         }
     }
 
@@ -68,6 +66,7 @@ class NimaSearchFragment : LazyFragment() {
 
     override fun onLazyLoad() {
         initView()
+        loadData()
     }
 
     private fun initView() {

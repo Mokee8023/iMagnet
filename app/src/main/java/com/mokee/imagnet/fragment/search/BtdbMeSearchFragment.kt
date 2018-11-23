@@ -49,8 +49,6 @@ class BtdbMeSearchFragment : LazyFragment() {
         mSearchText = arguments?.getString(SEARCH_EXTRA_TEXT)
         mSearchText?.let {
             mSearchUrl = MagnetConstrant.BTDB_ME_SEARCH_URL + URLEncoder.encode(it) + "-s1d-1.html"
-            NetworkPresenter.instance?.getHtmlContent(
-                    NetworkPresenter.NetworkItem(RequestType.BTDB_ME_SEARCH, mSearchUrl!!))
         }
     }
 
@@ -68,6 +66,7 @@ class BtdbMeSearchFragment : LazyFragment() {
 
     override fun onLazyLoad() {
         initView()
+        loadData()
     }
 
     private fun initView() {
