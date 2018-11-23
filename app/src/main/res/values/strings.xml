@@ -41,7 +41,7 @@
         <item>BTDB</item>
     </string-array>
     <string name="title_activity_web_view">WebView</string>
-    <string name="main_drawer_menu_settings">设置</string>
+    <string name="main_drawer_menu_settings">应用设置</string>
     <string name="main_drawer_menu_second_title">交流</string>
     <string name="main_drawer_menu_share">分享</string>
     <string name="main_drawer_menu_about">关于</string>
@@ -65,4 +65,5 @@
     <string name="gesture_show_unlock_error">图案错误</string>
     <string name="gesture_show_unlock_success">匹配成功</string>
     <string name="gesture_show_unlock_home">请绘制手势解锁</string>
+    <string name="main_drawer_menu_download_manager">下载管理</string>
 </resources>
