@@ -29,17 +29,28 @@ class GestureActivity : AppCompatActivity() {
         isFirstCreatePattern = true
         firstPatternString = null
 
-        gesture_show_clear.isClickable = false
-        gesture_show_next.isClickable = false
-        gesture_show_clear.setTextColor(Color.GRAY)
-        gesture_show_next.setTextColor(Color.GRAY)
-
-        gesture_show_clear.visibility = View.VISIBLE
-
-        gesture_show_next.text = resources.getString(R.string.gesture_show_next)
+        clearOp(false, Color.GRAY, View.VISIBLE)
+        nextOp(false, Color.GRAY, resources.getString(R.string.gesture_show_next))
 
         gesture_show_text.text = resources.getString(R.string.gesture_show_setup_one)
         gesture_show_text.setTextColor(Color.WHITE)
+    }
+
+    private fun nextOp(isClickable: Boolean? = null, textColor: Int? = null, text: String? = null) {
+        isClickable?.let{ gesture_show_next.isEnabled = it }
+        textColor?.let { gesture_show_next.setTextColor(it) }
+        text?.let { gesture_show_next.text = it }
+    }
+
+    private fun clearOp(isClickable: Boolean? = null, textColor: Int? = null, isVisable: Int? = null) {
+        isClickable?.let{ gesture_show_clear.isEnabled = it }
+        textColor?.let { gesture_show_clear.setTextColor(it) }
+        isVisable?.let { gesture_show_clear.visibility = it }
+    }
+
+    private fun textOp(text: String? = null, color: Int? = null) {
+        text?.let { gesture_show_text.text = it }
+        color?.let { gesture_show_text.setTextColor(it) }
     }
 
     private var matchSuccessDelayRunnable = Runnable {
@@ -57,19 +68,13 @@ class GestureActivity : AppCompatActivity() {
             Timber.d("Pattern drawing started")
 
             if(isFirstCreatePattern) {
-                gesture_show_clear.isClickable = true
-                gesture_show_next.isClickable = true
-                gesture_show_clear.setTextColor(Color.WHITE)
-                gesture_show_next.setTextColor(Color.WHITE)
+                clearOp(true, Color.WHITE)
+                nextOp(true, Color.WHITE)
             } else {
-                gesture_show_clear.visibility = View.GONE
-
-                gesture_show_next.isClickable = true
-                gesture_show_next.setTextColor(Color.WHITE)
-                gesture_show_next.text = resources.getString(R.string.gesture_show_ensure)
+                clearOp(isVisable = View.GONE)
+                nextOp(true, Color.WHITE, resources.getString(R.string.gesture_show_ensure))
             }
-
-            gesture_show_text.text = resources.getString(R.string.gesture_show_setup_drawing)
+            textOp(text = resources.getString(R.string.gesture_show_setup_drawing))
         }
         override fun onCleared() { Timber.d("Pattern has been cleared") }
         override fun onProgress(progressPattern: List<PatternLockView.Dot>) { Timber.d("Pattern progress") }
@@ -78,7 +83,6 @@ class GestureActivity : AppCompatActivity() {
             Timber.d("Pattern complete.")
 
             processAuth(PatternLockUtils.patternToString(mPatternLockView, pattern))
-
             isFirstCreatePattern = false
         }
     }
@@ -95,6 +99,11 @@ class GestureActivity : AppCompatActivity() {
         init()
     }
 
+    override fun onResume() {
+        super.onResume()
+        fullscreen()
+    }
+
     private fun init() {
         if(type == Type.UNLOCK) {
             val enable = SPUtil.getBooleanSetting(this, ENABLE_GESTURE_KEY, false)
@@ -104,28 +113,24 @@ class GestureActivity : AppCompatActivity() {
                 finish()
             }
 
-            gesture_show_text.text = resources.getString(R.string.gesture_show_unlock_home)
-
+            textOp(text = resources.getString(R.string.gesture_show_unlock_home))
             hide()
         } else if(type == Type.SETUP) {
-            gesture_show_text.text = resources.getString(R.string.gesture_show_setup_one)
+            textOp(text = resources.getString(R.string.gesture_show_setup_one))
+            clearOp(isClickable = false)
+            nextOp(isClickable = false)
             show()
         }
-
-        fullscreen()
 
         gesture_show_clear.setOnClickListener {
             mHandler.post(resetRunnable)
         }
         gesture_show_next.setOnClickListener {
-            gesture_show_text.text = resources.getString(R.string.gesture_show_setup_again)
-
             mPatternLockView.clearPattern()
-            gesture_show_clear.visibility = View.GONE
-            gesture_show_next.text = resources.getString(R.string.gesture_show_ensure)
 
-            gesture_show_next.isClickable = false
-            gesture_show_next.setTextColor(Color.GRAY)
+            textOp(text = resources.getString(R.string.gesture_show_setup_again))
+            clearOp(isVisable = View.GONE)
+            nextOp(false, Color.GRAY, resources.getString(R.string.gesture_show_ensure))
 
             if(isMatchSuccess) {
                 mHandler.removeCallbacks(matchSuccessDelayRunnable)
@@ -157,39 +162,35 @@ class GestureActivity : AppCompatActivity() {
                 val storePattern = SPUtil.getStringSetting(this, MagnetConstrant.PATTERN_STRING_KEY, "")
                 if(storePattern == MD5Util.generateMD5(pattern)) {
                     // verify success
-                    gesture_show_text.text = resources.getString(R.string.gesture_show_unlock_success)
+                    textOp(text = resources.getString(R.string.gesture_show_unlock_success))
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 } else {
                     // verify fail
-                    gesture_show_text.text = resources.getString(R.string.gesture_show_unlock_error)
+                    textOp(text = resources.getString(R.string.gesture_show_unlock_error))
                     mPatternLockView.setViewMode(PatternLockView.PatternViewMode.WRONG)
                 }
             } else if(type == Type.SETUP) {
                 if(isFirstCreatePattern) {
                     // first draw, store temp pattern string
+                    textOp(text = resources.getString(R.string.gesture_show_setup_first_save))
                     firstPatternString = MD5Util.generateMD5(pattern)
-                    gesture_show_text.text = resources.getString(R.string.gesture_show_setup_first_save)
                 } else {
                     val secondPattern = MD5Util.generateMD5(pattern)
                     secondPattern?.let {
                         if(secondPattern == firstPatternString) {
                             // match success
                             isMatchSuccess = true
-
-                            gesture_show_text.text = resources.getString(R.string.gesture_show_setup_success)
-                            gesture_show_text.setTextColor(Color.GREEN)
+                            textOp(text = resources.getString(R.string.gesture_show_setup_success), color = Color.GREEN)
 
                             mPatternLockView.setViewMode(PatternLockView.PatternViewMode.CORRECT)
                             SPUtil.setStringSetting(this, MagnetConstrant.PATTERN_STRING_KEY, secondPattern)
                             mHandler.postDelayed(matchSuccessDelayRunnable, MATCH_SUCCESS_DELAY_TIME * 1000L)
                         } else {
                             // match fail
-                            gesture_show_text.text = resources.getString(R.string.gesture_show_setup_error)
-                            gesture_show_text.setTextColor(Color.RED)
+                            textOp(text = resources.getString(R.string.gesture_show_setup_error), color = Color.RED)
 
-                            gesture_show_next.isClickable = false
-                            gesture_show_next.setTextColor(Color.GRAY)
+                            nextOp(false, Color.GRAY)
                             mPatternLockView.setViewMode(PatternLockView.PatternViewMode.WRONG)
                             mHandler.postDelayed(resetRunnable, RESET_DELAY_TIME * 1000L)
                         }
