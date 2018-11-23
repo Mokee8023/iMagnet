@@ -1,5 +1,6 @@
 package com.mokee.imagnet.activity.about
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.LevelListDrawable
@@ -50,6 +51,10 @@ class AboutActivity : AppCompatActivity() {
                 SpannableString.SPAN_EXCLUSIVE_INCLUSIVE)
         project_info_store_path.text = apkString
         project_info_store_path.movementMethod = LinkMovementMethod.getInstance()
+
+        val appName = resources.getString(R.string.app_name)
+        val versionName = packageManager.getPackageInfo(packageName, 0).versionName
+        project_info_version.text = "Name: $appName ( $packageName )\nVersion: $versionName"
 
         Thread{
             val infoHtml = """
