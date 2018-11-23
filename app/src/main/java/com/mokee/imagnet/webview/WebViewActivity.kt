@@ -21,6 +21,8 @@ import android.os.Environment
 import android.webkit.*
 import com.mokee.imagnet.utils.URLHandleUtil
 import com.tbruyelle.rxpermissions2.RxPermissions
+import java.net.URLDecoder
+import java.nio.charset.Charset
 
 
 class WebViewActivity : AppCompatActivity() {
@@ -105,6 +107,9 @@ class WebViewActivity : AppCompatActivity() {
                             request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename)
                             val dm = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
                             dm.enqueue(request)
+                            Timber.d("filename:$filename")
+
+                            Toast.makeText(this, "开始下载: ${URLDecoder.decode(filename)}文件", Toast.LENGTH_SHORT).show()
                         } else {
                             Toast.makeText(this, "未获取权限，无法下载，请从其他通道下载.", Toast.LENGTH_SHORT).show()
                         }
