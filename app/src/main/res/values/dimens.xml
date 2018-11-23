@@ -24,4 +24,6 @@
     <dimen name="cilicat_search_download_icon_size">20dp</dimen>
 
     <dimen name="open_other_broswer_icon_size">30dp</dimen>
+
+    <dimen name="gesture_return_icon_size">48dp</dimen>
 </resources>

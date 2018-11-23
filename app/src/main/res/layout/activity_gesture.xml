@@ -50,6 +50,17 @@
             app:wrongStateColor="@android:color/holo_red_light" />
     </LinearLayout>
 
+    <ImageButton
+        android:id="@+id/gesture_return"
+        android:layout_width="@dimen/gesture_return_icon_size"
+        android:layout_height="@dimen/gesture_return_icon_size"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/return_icon"
+        android:visibility="gone" />
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

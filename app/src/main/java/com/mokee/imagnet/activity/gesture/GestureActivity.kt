@@ -55,7 +55,7 @@ class GestureActivity : AppCompatActivity() {
 
     private var matchSuccessDelayRunnable = Runnable {
         setResult(Activity.RESULT_OK)
-        finish()
+        finishActivity()
     }
 
     private var isFirstCreatePattern = true
@@ -110,7 +110,7 @@ class GestureActivity : AppCompatActivity() {
             if(!enable) {
                 startActivity(Intent(this, MainActivity::class.java))
                 // Exit gesture activity, then to main activity
-                finish()
+                finishActivity()
             }
 
             textOp(text = resources.getString(R.string.gesture_show_unlock_home))
@@ -120,11 +120,11 @@ class GestureActivity : AppCompatActivity() {
             clearOp(isClickable = false)
             nextOp(isClickable = false)
             show()
+            gesture_return.visibility = View.VISIBLE
         }
 
-        gesture_show_clear.setOnClickListener {
-            mHandler.post(resetRunnable)
-        }
+        gesture_show_clear.setOnClickListener { mHandler.post(resetRunnable) }
+
         gesture_show_next.setOnClickListener {
             mPatternLockView.clearPattern()
 
@@ -135,8 +135,13 @@ class GestureActivity : AppCompatActivity() {
             if(isMatchSuccess) {
                 mHandler.removeCallbacks(matchSuccessDelayRunnable)
                 setResult(Activity.RESULT_OK)
-                finish()
+                finishActivity()
             }
+        }
+
+        gesture_return.setOnClickListener {
+            setResult(Activity.RESULT_CANCELED)
+            finishActivity()
         }
     }
 
@@ -164,7 +169,7 @@ class GestureActivity : AppCompatActivity() {
                     // verify success
                     textOp(text = resources.getString(R.string.gesture_show_unlock_success))
                     startActivity(Intent(this, MainActivity::class.java))
-                    finish()
+                    finishActivity()
                 } else {
                     // verify fail
                     textOp(text = resources.getString(R.string.gesture_show_unlock_error))
@@ -198,6 +203,16 @@ class GestureActivity : AppCompatActivity() {
                 }
             }
         }?: Timber.e("Pattern is null.")
+    }
+
+    private fun clearRunnable() {
+        mHandler.removeCallbacks(matchSuccessDelayRunnable)
+        mHandler.removeCallbacks(resetRunnable)
+    }
+
+    private fun finishActivity() {
+        clearRunnable()
+        finish()
     }
 
     private fun fullscreen() {
