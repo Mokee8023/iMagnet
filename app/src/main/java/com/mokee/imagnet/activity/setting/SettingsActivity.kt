@@ -7,6 +7,7 @@ import android.preference.CheckBoxPreference
 import android.preference.EditTextPreference
 import android.preference.MultiSelectListPreference
 import android.preference.PreferenceFragment
+import android.view.MenuItem
 import com.mokee.imagnet.R
 import com.mokee.imagnet.activity.gesture.GestureActivity
 import com.mokee.imagnet.constrant.MagnetConstrant
@@ -97,6 +98,13 @@ class SettingsActivity : AppSettingActivity(), SharedPreferences.OnSharedPrefere
     override fun isValidFragment(fragmentName: String): Boolean {
         return PreferenceFragment::class.java.name == fragmentName ||
                 WebsiteUrlPreferenceActivity::class.java.name == fragmentName
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if(item?.itemId == android.R.id.home) {
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     companion object {
