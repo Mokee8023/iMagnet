@@ -3,27 +3,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/download_manager"
-            android:icon="@drawable/ic_menu_download"
-            android:title="@string/main_drawer_menu_download_manager" />
-        <item
-            android:id="@+id/nav_setting"
-            android:icon="@drawable/ic_menu_settings"
-            android:title="@string/main_drawer_menu_settings" />
-    </group>
+    <!--<group android:checkableBehavior="single">-->
+        <!--<item-->
+            <!--android:id="@+id/nav_camera"-->
+            <!--android:icon="@drawable/ic_menu_camera"-->
+            <!--android:title="Import" />-->
+        <!--<item-->
+            <!--android:id="@+id/nav_gallery"-->
+            <!--android:icon="@drawable/ic_menu_gallery"-->
+            <!--android:title="Gallery" />-->
+        <!--<item-->
+            <!--android:id="@+id/download_manager"-->
+            <!--android:icon="@drawable/ic_menu_download"-->
+            <!--android:title="@string/main_drawer_menu_download_manager" />-->
+        <!--<item-->
+            <!--android:id="@+id/nav_setting"-->
+            <!--android:icon="@drawable/ic_menu_settings"-->
+            <!--android:title="@string/main_drawer_menu_settings" />-->
+    <!--</group>-->
 
-    <item android:title="@string/main_drawer_menu_second_title">
-        <menu>
+    <!--<item android:title="@string/main_drawer_menu_second_title">-->
+        <!--<menu>-->
+            <item
+                android:id="@+id/nav_setting"
+                android:icon="@drawable/ic_menu_settings"
+                android:title="@string/main_drawer_menu_settings" />
+
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
@@ -32,7 +37,7 @@
                 android:id="@+id/nav_about"
                 android:icon="@drawable/ic_menu_about"
                 android:title="@string/main_drawer_menu_about" />
-        </menu>
-    </item>
+        <!--</menu>-->
+    <!--</item>-->
 
 </menu>
