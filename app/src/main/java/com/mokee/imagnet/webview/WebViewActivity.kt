@@ -144,6 +144,8 @@ class WebViewActivity : AppCompatActivity() {
             webview_load_progress.progress = newProgress
             if(newProgress >= 100 ) {
                 webview_load_progress.visibility = View.GONE
+            } else {
+                webview_load_progress.visibility = View.VISIBLE
             }
         }
     }
