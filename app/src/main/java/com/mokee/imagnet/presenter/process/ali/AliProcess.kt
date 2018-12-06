@@ -1,5 +1,6 @@
 package com.mokee.imagnet.presenter.process.ali
 
+import com.mokee.imagnet.constrant.MagnetConstrant
 import com.mokee.imagnet.event.AliFailEvent
 import com.mokee.imagnet.model.AliHomeItem
 import com.mokee.imagnet.model.RequestType
@@ -30,7 +31,7 @@ object AliProcess : ProcessResponse() {
                 val ddTag = ddTags[0]
                 val items = ddTag.getElementsByTag(HOME_BOX_HOME_LIST_ITEM_TAG)
                 items.forEach {
-                    val href = it.attr("href")
+                    val href = MagnetConstrant.ALICILI_HOME_URL + it.attr("href")
                     val name = it.text()
                     Timber.d("Ali home item, href: $href, name: $name")
 
