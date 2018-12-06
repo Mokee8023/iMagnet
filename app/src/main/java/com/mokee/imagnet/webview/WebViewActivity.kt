@@ -22,8 +22,6 @@ import android.webkit.*
 import com.mokee.imagnet.utils.URLHandleUtil
 import com.tbruyelle.rxpermissions2.RxPermissions
 import java.net.URLDecoder
-import java.nio.charset.Charset
-
 
 class WebViewActivity : AppCompatActivity() {
     private var mLoadUrl: String = ""

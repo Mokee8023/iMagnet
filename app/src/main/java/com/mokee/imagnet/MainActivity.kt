@@ -1,9 +1,9 @@
 package com.mokee.imagnet
 
-import android.content.Intent
-import android.content.SharedPreferences
+import android.content.*
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -28,6 +28,7 @@ import com.mokee.imagnet.utils.DrawMenuUtil
 import com.mokee.imagnet.utils.SPUtil
 import com.mokee.imagnet.utils.SoftKeyBoardListener
 import com.mokee.imagnet.utils.SoftKeyBoardListener.OnSoftKeyBoardChangeListener
+import com.mokee.imagnet.utils.URLHandleUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -47,6 +48,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private lateinit var mSearchView: SearchView
 
+    private lateinit var mClipBoardManager: ClipboardManager
+
+    private var preClipText: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -57,6 +62,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         initBar()
         initView()
         initPresenter()
+
+        mClipBoardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     }
 
     override fun onResume() {
@@ -73,6 +80,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         if(isTabChange) {
             isTabChange = false
+        }
+
+        checkClipBoard()
+    }
+
+    private fun checkClipBoard() {
+        val text = mClipBoardManager.primaryClip.getItemAt(0).text.toString()
+        if(!text.isEmpty() && (text.startsWith("http") || text.startsWith("https:"))) {
+            if(text != preClipText) {
+                Snackbar.make(drawer_layout, "是否打开链接：$text", Snackbar.LENGTH_LONG)
+                        .setAction("确定") {
+                            mClipBoardManager.primaryClip = ClipData.newPlainText("", "")
+                            preClipText = null
+                            URLHandleUtil.innerWebview(this, text)
+                        }.show()
+                preClipText = text
+            }
         }
     }
 
