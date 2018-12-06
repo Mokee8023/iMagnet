@@ -128,7 +128,6 @@ class GestureActivity : AppCompatActivity() {
         gesture_show_next.setOnClickListener {
             mPatternLockView.clearPattern()
 
-            textOp(text = resources.getString(R.string.gesture_show_setup_again))
             clearOp(isVisable = View.GONE)
             nextOp(false, Color.GRAY, resources.getString(R.string.gesture_show_ensure))
 
@@ -136,6 +135,8 @@ class GestureActivity : AppCompatActivity() {
                 mHandler.removeCallbacks(matchSuccessDelayRunnable)
                 setResult(Activity.RESULT_OK)
                 finishActivity()
+            } else {
+                textOp(text = resources.getString(R.string.gesture_show_setup_again))
             }
         }
 
